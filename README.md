@@ -23,13 +23,13 @@ $ composer require windomz/coupon-module
 
 Create a configuration file, like `config.yml`:
 ```yaml
-database:
-    host: 127.0.0.1
-    port: 3306
-    type: mysql
-    name: coupondb
-    username: root
-    password: root
+database_host: 127.0.0.1
+database_port: 3306
+database_type: mysql
+database_name: coupondb
+database_username: root
+database_password: root
+database_logging: true
 ```
 
 If only for quick testing, 
