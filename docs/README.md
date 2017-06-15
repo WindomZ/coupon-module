@@ -67,9 +67,7 @@ Coupon::setConfigPath('./config.yml');
 |string|url|N|Y|链接地址|
 |int|class|Y|N|类别(第一级分类，单选，可选)，采用分类方式：0, 1, 2, 3, 4, 5, 6, 7...|
 |int|kind|Y|N|类型(第二级分类，多选，可选)，采用分类方式：1, 2, 4, 8, 16, 32, 64...|
-|int|coupon_size|Y|Y|优惠卷派放总额|
-|int|coupon_used|N|N|优惠卷派放数量|
-|int|coupon_limit|Y|Y|优惠卷派放次数限制|
+|int|coupon_limit|Y|Y|用户优惠卷派放次数限制，为0则不限制|
 |string|dead_time|Y|Y|截止时间|
 
 #### 优惠卷模板(`CouponTemplate`)
@@ -102,6 +100,8 @@ Coupon::setConfigPath('./config.yml');
 |string|desc|N|Y|描述|
 |string|activity_id|Y|N|活动UUID|
 |string|template_id|Y|N|优惠卷模板UUID|
+|int|coupon_size|Y|Y|优惠卷派放总数|
+|int|coupon_count|N|N|优惠卷派放数量|
 |string|dead_time|Y|Y|截止时间|
 
 #### 优惠卷(`Coupon`)
@@ -137,12 +137,11 @@ Coupon::setConfigPath('./config.yml');
     - string $id 优惠卷活动UUID
   - @return object
 
-- CouponActivity::create($name, $desc, $coupon_size, $coupon_limit)
+- CouponActivity::create($name, $desc, $coupon_limit)
   - @description 构建优惠卷活动(`CouponActivity`)
   - @param
     - string $name 名称
     - string $desc 描述
-    - int $coupon_size 优惠卷派放总数
     - int $coupon_limit 优惠卷派放次数限制
   - @return object
 
@@ -219,13 +218,14 @@ Coupon::setConfigPath('./config.yml');
     - string $id 优惠卷活动UUID
   - @return object
 
-- CouponPack::create($name, $desc, $activity_id, $template_id)
+- CouponPack::create($name, $desc, $activity_id, $template_id, $coupon_size)
   - @description 构建优惠卷包(`CouponPack`)
   - @param
     - string $name 名称
     - string $desc 描述
     - string $activity_id 活动UUID
     - string $template_id 优惠卷模板UUID
+    - int $coupon_size 优惠卷派放总数
   - @return object
 
 - CouponPack::list($where, $limit, $page, $order)
