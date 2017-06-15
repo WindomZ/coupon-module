@@ -150,7 +150,9 @@ class Coupon extends DbCoupon
                 self::COL_ACTIVITY_ID => $this->activity_id,
             ]
         );
-        if ($count >= $this->activity->coupon_limit) {
+        if ($this->activity->coupon_limit > 0
+            && $count >= $this->activity->coupon_limit
+        ) {
             return false;
         }
 

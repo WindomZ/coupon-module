@@ -114,6 +114,9 @@ class CouponActivity extends BaseTemplate2
         if ($this->kind < 0) {
             $this->kind = 0;
         }
+        if ($this->coupon_limit < 0) {
+            $this->coupon_limit = 0;
+        }
         if (empty($this->dead_time)) {
             throw new ErrorException('"dead_time" should be a date: '.$this->dead_time);
         }

@@ -110,7 +110,7 @@ class CouponPack extends DbCouponPack
      */
     public function pass()
     {
-        return $this->active && $this->coupon_size > $this->coupon_used;
+        return $this->active && $this->coupon_size > $this->coupon_count;
     }
 
     /**
@@ -134,6 +134,6 @@ class CouponPack extends DbCouponPack
             return false;
         }
 
-        return $this->increase(self::COL_COUPON_USED, 1);
+        return $this->increase(self::COL_COUPON_COUNT, 1);
     }
 }
