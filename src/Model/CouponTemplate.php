@@ -44,16 +44,16 @@ class CouponTemplate extends DbCouponTemplate
     /**
      * @param string $name
      * @param string $desc
-     * @param int $min_amount
-     * @param int $offer_amount
+     * @param float $min_amount
+     * @param float $offer_amount
      * @return CouponTemplate
      * @throws ErrorException
      */
     public static function create(
         string $name,
         string $desc = '',
-        $min_amount = 0,
-        $offer_amount = 0
+        float $min_amount = 0,
+        float $offer_amount = 0
     ) {
         if (empty($name)) {
             throw new ErrorException('"name" should not be empty: '.$name);
@@ -62,7 +62,7 @@ class CouponTemplate extends DbCouponTemplate
             $min_amount = 0;
         }
         if ($offer_amount < 0) {
-            throw new ErrorException('"offer_amount" should be positive integer: '.$offer_amount);
+            throw new ErrorException('"offer_amount" should be positive float: '.$offer_amount);
         }
 
         $obj = new CouponTemplate();
