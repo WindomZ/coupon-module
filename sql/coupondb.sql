@@ -74,7 +74,7 @@ create table coupondb.cp_coupon_pack
 	activity_id char(36) not null,
 	template_id char(36) not null,
 	coupon_size int default '0' not null,
-	coupon_used int default '0' not null,
+	coupon_count int default '0' not null,
 	dead_time datetime default CURRENT_TIMESTAMP not null,
 	constraint cp_coupon_pack_id_uindex
 		unique (id)
