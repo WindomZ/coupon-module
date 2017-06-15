@@ -9,10 +9,10 @@
 
 ## Feature
 
-- [x] Activity
+- [x] CouponActivity
 - [x] CouponTemplate
-- [x] Pack = Activity + CouponTemplate
-- [x] Coupon = one of Pack
+- [x] CouponPack = CouponActivity + CouponTemplate
+- [x] Coupon = one of CouponPack
 
 ## Installation
 
