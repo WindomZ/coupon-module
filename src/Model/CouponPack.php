@@ -64,7 +64,7 @@ class CouponPack extends DbCouponPack
         }
         $activity = CouponActivity::object($activity_id);
         if (!$activity) {
-            throw new ErrorException('"activity_id" should not be existed: '.$activity_id);
+            throw new ErrorException('"activity_id" should be existed: '.$activity_id);
         }
 
         if (!Uuid::isValid($template_id)) {
@@ -72,7 +72,7 @@ class CouponPack extends DbCouponPack
         }
         $template = CouponTemplate::object($template_id);
         if (!$template) {
-            throw new ErrorException('"template_id" should not be existed: '.$template_id);
+            throw new ErrorException('"template_id" should be existed: '.$template_id);
         }
 
         $obj = new CouponPack();
