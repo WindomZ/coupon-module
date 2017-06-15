@@ -5,6 +5,10 @@ namespace CouponModule\Database;
 use CouponModule\Exception\ErrorException;
 use CouponModule\Util\Uuid;
 
+/**
+ * Class CouponPack
+ * @package CouponModule\Database
+ */
 class CouponPack extends BaseTemplate2
 {
     const COL_ACTIVITY_ID = 'activity_id';

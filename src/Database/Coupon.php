@@ -6,6 +6,10 @@ use CouponModule\Exception\ErrorException;
 use CouponModule\Util\Date;
 use CouponModule\Util\Uuid;
 
+/**
+ * Class Coupon
+ * @package CouponModule\Database
+ */
 class Coupon extends CouponTemplate
 {
     const COL_OWNER_ID = 'owner_id';
