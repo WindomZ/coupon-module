@@ -31,9 +31,11 @@ class ModelTest extends TestCase
             $obj = CouponActivity::create(
                 'name',
                 '这是描述',
-                10000,
                 1
             );
+            $obj->level = 1;
+            $obj->class = 1;
+            $obj->kind = 2;
             try {
                 $this->assertFalse($obj->post());
             } catch (ErrorException $e) {
@@ -54,16 +56,20 @@ class ModelTest extends TestCase
 
         $this->assertEquals($ins->name, 'name');
         $this->assertEquals($ins->desc, '这是描述');
-        $this->assertEquals($ins->coupon_size, 10000);
         $this->assertEquals($ins->coupon_limit, 1);
+        $this->assertEquals($ins->level, 1);
+        $this->assertEquals($ins->class, 1);
+        $this->assertEquals($ins->kind, 2);
 
         $ins = CouponActivity::object($ins->id);
         self::assertNotEmpty($ins);
 
         $this->assertEquals($ins->name, 'name');
         $this->assertEquals($ins->desc, '这是描述');
-        $this->assertEquals($ins->coupon_size, 10000);
         $this->assertEquals($ins->coupon_limit, 1);
+        $this->assertEquals($ins->level, 1);
+        $this->assertEquals($ins->class, 1);
+        $this->assertEquals($ins->kind, 2);
 
         $this->assertTrue($ins->disable());
 
@@ -93,6 +99,9 @@ class ModelTest extends TestCase
                 100,
                 200
             );
+            $obj->level = 2;
+            $obj->class = 2;
+            $obj->kind = 4;
             $this->assertTrue($obj->post());
 
             $list = CouponTemplate::list([CouponTemplate::COL_NAME => 'name'], 10, 0);
@@ -108,6 +117,9 @@ class ModelTest extends TestCase
         $this->assertEquals($ins->desc, '这是描述');
         $this->assertEquals($ins->min_amount, 100);
         $this->assertEquals($ins->offer_amount, 200);
+        $this->assertEquals($ins->level, 2);
+        $this->assertEquals($ins->class, 2);
+        $this->assertEquals($ins->kind, 4);
 
         $ins = CouponTemplate::object($ins->id);
         self::assertNotEmpty($ins);
@@ -116,6 +128,9 @@ class ModelTest extends TestCase
         $this->assertEquals($ins->desc, '这是描述');
         $this->assertEquals($ins->min_amount, 100);
         $this->assertEquals($ins->offer_amount, 200);
+        $this->assertEquals($ins->level, 2);
+        $this->assertEquals($ins->class, 2);
+        $this->assertEquals($ins->kind, 4);
 
         $this->assertTrue($ins->disable());
 
@@ -150,7 +165,8 @@ class ModelTest extends TestCase
                 'name',
                 '这是描述',
                 $activity->id,
-                $template->id
+                $template->id,
+                10000
             );
             $this->assertTrue($obj->post());
 
@@ -167,6 +183,8 @@ class ModelTest extends TestCase
         $this->assertEquals($ins->desc, '这是描述');
         $this->assertEquals($ins->activity_id, $activity->id);
         $this->assertEquals($ins->template_id, $template->id);
+        $this->assertEquals($ins->coupon_size, 10000);
+        $this->assertEquals($ins->level, 1);
 
         $ins = CouponPack::object($ins->id);
         self::assertNotEmpty($ins);
@@ -175,6 +193,8 @@ class ModelTest extends TestCase
         $this->assertEquals($ins->desc, '这是描述');
         $this->assertEquals($ins->activity_id, $activity->id);
         $this->assertEquals($ins->template_id, $template->id);
+        $this->assertEquals($ins->coupon_size, 10000);
+        $this->assertEquals($ins->level, 1);
 
         $this->assertTrue($ins->disable());
 
@@ -221,6 +241,11 @@ class ModelTest extends TestCase
         $this->assertEquals($ins->desc, '这是描述');
         $this->assertEquals($ins->activity_id, $pack->activity_id);
         $this->assertEquals($ins->template_id, $pack->template_id);
+        $this->assertEquals($ins->min_amount, 100);
+        $this->assertEquals($ins->offer_amount, 200);
+        $this->assertEquals($ins->level, 1);
+        $this->assertEquals($ins->class, 2);
+        $this->assertEquals($ins->kind, 4);
 
         $ins = Coupon::object($ins->id);
         self::assertNotEmpty($ins);
@@ -229,6 +254,11 @@ class ModelTest extends TestCase
         $this->assertEquals($ins->desc, '这是描述');
         $this->assertEquals($ins->activity_id, $pack->activity_id);
         $this->assertEquals($ins->template_id, $pack->template_id);
+        $this->assertEquals($ins->min_amount, 100);
+        $this->assertEquals($ins->offer_amount, 200);
+        $this->assertEquals($ins->level, 1);
+        $this->assertEquals($ins->class, 2);
+        $this->assertEquals($ins->kind, 4);
 
         $this->assertTrue($ins->disable());
 

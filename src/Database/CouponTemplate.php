@@ -4,6 +4,10 @@ namespace CouponModule\Database;
 
 use CouponModule\Exception\ErrorException;
 
+/**
+ * Class CouponTemplate
+ * @package CouponModule\Database
+ */
 class CouponTemplate extends BaseTemplate2
 {
     const COL_CLASS = 'class';

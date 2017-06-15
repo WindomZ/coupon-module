@@ -44,7 +44,6 @@ class CouponActivity extends DbCouponActivity
     /**
      * @param string $name
      * @param string $desc
-     * @param int $coupon_size
      * @param int $coupon_limit
      * @param string $dead_time
      * @return CouponActivity
@@ -53,9 +52,8 @@ class CouponActivity extends DbCouponActivity
     public static function create(
         string $name,
         string $desc = '',
-        $coupon_size = 0,
-        $coupon_limit = 0,
-        $dead_time = ''
+        int $coupon_limit = 0,
+        string $dead_time = ''
     ) {
         if (empty($name)) {
             throw new ErrorException('"name" should not be empty: '.$name);
@@ -64,7 +62,6 @@ class CouponActivity extends DbCouponActivity
         $obj = new CouponActivity();
         $obj->name = $name;
         $obj->desc = $desc;
-        $obj->coupon_size = $coupon_size;
         $obj->coupon_limit = $coupon_limit;
         $obj->dead_time = $dead_time;
 
@@ -88,7 +85,7 @@ class CouponActivity extends DbCouponActivity
      */
     public function pass()
     {
-        return $this->active && $this->coupon_size > $this->coupon_used;
+        return $this->active;
     }
 
     /**
@@ -100,18 +97,5 @@ class CouponActivity extends DbCouponActivity
         $this->active = false;
 
         return $this->put([self::COL_ACTIVE]);
-    }
-
-    /**
-     * @return bool
-     * @throws ErrorException
-     */
-    public function use(): bool
-    {
-        if (!$this->refresh() || !$this->pass()) {
-            return false;
-        }
-
-        return $this->increase(self::COL_COUPON_USED, 1);
     }
 }

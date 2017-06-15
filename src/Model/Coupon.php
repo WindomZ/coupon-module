@@ -61,7 +61,7 @@ class Coupon extends DbCoupon
         }
         $pack = CouponPack::object($pack_id);
         if (!$pack) {
-            throw new ErrorException('"pack_id" should not be existed: '.$pack_id);
+            throw new ErrorException('"pack_id" should be existed: '.$pack_id);
         }
 
         if (!Uuid::isValid($pack->activity_id)) {
@@ -69,28 +69,44 @@ class Coupon extends DbCoupon
         }
         $activity = CouponActivity::object($pack->activity_id);
         if (!$activity) {
-            throw new ErrorException('"activity_id" should not be existed: '.$pack->activity_id);
+            throw new ErrorException('"activity_id" should be existed: '.$pack->activity_id);
         }
 
         if (!Uuid::isValid($pack->template_id)) {
-            throw new ErrorException('"template_id" should not be empty: '.$pack->template_id);
+            throw new ErrorException('"template_id" should be empty: '.$pack->template_id);
         }
         $template = CouponTemplate::object($pack->template_id);
         if (!$template) {
-            throw new ErrorException('"template_id" should not be existed: '.$pack->template_id);
+            throw new ErrorException('"template_id" should be existed: '.$pack->template_id);
+        }
+
+        $batch = CouponBatch::create($owner_id, $activity->id, $template->id, $pack->id);
+        if (!$batch->post()) {
+            throw new ErrorException('"batch_id" should be existed: '.$pack->template_id);
         }
 
         $obj = new Coupon();
-        $obj->name = $template->name;
-        $obj->desc = $template->desc;
+        $obj->owner_id = $owner_id;
         $obj->activity = $activity;
         $obj->activity_id = $activity->id;
         $obj->template = $template;
         $obj->template_id = $template->id;
+        $obj->pack = $pack;
+        $obj->pack_id = $pack->id;
+        $obj->batch = $batch;
+        $obj->batch_id = $batch->id;
 
-        $obj->owner_id = $owner_id;
         $obj->level = $pack->level;
         $obj->active = $pack->active;
+
+        $obj->name = $template->name;
+        $obj->desc = $template->desc;
+        $obj->class = $template->class;
+        $obj->kind = $template->kind;
+        $obj->product_id = $template->product_id;
+        $obj->min_amount = $template->min_amount;
+        $obj->offer_amount = $template->offer_amount;
+
         $obj->dead_time = $pack->dead_time;
 
         return $obj;
@@ -114,17 +130,18 @@ class Coupon extends DbCoupon
      */
     public function post(): bool
     {
-        if (!Uuid::isValid($this->owner_id)) {
-            throw new ErrorException('"owner_id" should not be empty: '.$this->owner_id);
-        }
-        if (!Uuid::isValid($this->activity_id)) {
-            throw new ErrorException('"activity_id" should not be empty: '.$this->activity_id);
-        }
         if (!isset($this->activity)) {
             $this->activity = CouponActivity::object($this->activity_id);
         }
         if (!$this->activity) {
             throw new ErrorException('"activity_id" should be existed: '.$this->activity_id);
+        }
+
+        if (!isset($this->pack)) {
+            $this->pack = CouponPack::object($this->pack_id);
+        }
+        if (!$this->pack) {
+            throw new ErrorException('"pack_id" should be existed: '.$this->pack_id);
         }
 
         $count = $this->count(
@@ -133,12 +150,13 @@ class Coupon extends DbCoupon
                 self::COL_ACTIVITY_ID => $this->activity_id,
             ]
         );
-
-        if ($count >= $this->activity->coupon_limit) {
+        if ($this->activity->coupon_limit > 0
+            && $count >= $this->activity->coupon_limit
+        ) {
             return false;
         }
 
-        if (!$this->activity->use()) {
+        if (!$this->pack->use()) {
             return false;
         }
 

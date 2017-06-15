@@ -6,11 +6,17 @@ use CouponModule\Exception\ErrorException;
 use CouponModule\Util\Date;
 use CouponModule\Util\Uuid;
 
+/**
+ * Class Coupon
+ * @package CouponModule\Database
+ */
 class Coupon extends CouponTemplate
 {
     const COL_OWNER_ID = 'owner_id';
     const COL_ACTIVITY_ID = 'activity_id';
     const COL_TEMPLATE_ID = 'template_id';
+    const COL_PACK_ID = 'pack_id';
+    const COL_BATCH_ID = 'batch_id';
     const COL_USED_COUNT = 'used_count';
     const COL_USED_TIME = 'used_time';
     const COL_DEAD_TIME = 'dead_time';
@@ -39,6 +45,26 @@ class Coupon extends CouponTemplate
      * @var CouponTemplate|null
      */
     public $template = null;
+
+    /**
+     * @var string
+     */
+    public $pack_id;
+
+    /**
+     * @var CouponPack|null
+     */
+    public $pack = null;
+
+    /**
+     * @var string
+     */
+    public $batch_id;
+
+    /**
+     * @var CouponBatch|null
+     */
+    public $batch = null;
 
     /**
      * @var int
@@ -82,6 +108,8 @@ class Coupon extends CouponTemplate
                 self::COL_OWNER_ID => $this->owner_id,
                 self::COL_ACTIVITY_ID => $this->activity_id,
                 self::COL_TEMPLATE_ID => $this->template_id,
+                self::COL_PACK_ID => $this->pack_id,
+                self::COL_BATCH_ID => $this->batch_id,
                 self::COL_USED_COUNT => $this->used_count,
                 self::COL_USED_TIME => $this->used_time,
                 self::COL_DEAD_TIME => $this->dead_time,
@@ -100,6 +128,8 @@ class Coupon extends CouponTemplate
         $this->owner_id = $data[self::COL_OWNER_ID];
         $this->activity_id = $data[self::COL_ACTIVITY_ID];
         $this->template_id = $data[self::COL_TEMPLATE_ID];
+        $this->pack_id = $data[self::COL_PACK_ID];
+        $this->batch_id = $data[self::COL_BATCH_ID];
         $this->used_count = intval($data[self::COL_USED_COUNT]);
         $this->used_time = $data[self::COL_USED_TIME];
         $this->dead_time = $data[self::COL_DEAD_TIME];
@@ -132,6 +162,12 @@ class Coupon extends CouponTemplate
         }
         if (!Uuid::isValid($this->template_id)) {
             throw new ErrorException('"template_id" should be UUID!');
+        }
+        if (!Uuid::isValid($this->pack_id)) {
+            throw new ErrorException('"pack_id" should be UUID!');
+        }
+        if (!Uuid::isValid($this->batch_id)) {
+            throw new ErrorException('"batch_id" should be UUID!');
         }
         if ($this->used_count < 0) {
             $this->used_count = 0;

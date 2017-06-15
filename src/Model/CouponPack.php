@@ -47,6 +47,7 @@ class CouponPack extends DbCouponPack
      * @param string $desc
      * @param string $activity_id
      * @param string $template_id
+     * @param int $coupon_size
      * @return CouponPack
      * @throws ErrorException
      */
@@ -54,7 +55,8 @@ class CouponPack extends DbCouponPack
         string $name,
         string $desc = '',
         string $activity_id,
-        string $template_id
+        string $template_id,
+        int $coupon_size = 0
     ) {
         if (empty($name)) {
             throw new ErrorException('"name" should not be empty: '.$name);
@@ -64,7 +66,7 @@ class CouponPack extends DbCouponPack
         }
         $activity = CouponActivity::object($activity_id);
         if (!$activity) {
-            throw new ErrorException('"activity_id" should not be existed: '.$activity_id);
+            throw new ErrorException('"activity_id" should be existed: '.$activity_id);
         }
 
         if (!Uuid::isValid($template_id)) {
@@ -72,7 +74,7 @@ class CouponPack extends DbCouponPack
         }
         $template = CouponTemplate::object($template_id);
         if (!$template) {
-            throw new ErrorException('"template_id" should not be existed: '.$template_id);
+            throw new ErrorException('"template_id" should be existed: '.$template_id);
         }
 
         $obj = new CouponPack();
@@ -82,6 +84,7 @@ class CouponPack extends DbCouponPack
         $obj->activity_id = $activity->id;
         $obj->template = $template;
         $obj->template_id = $template->id;
+        $obj->coupon_size = $coupon_size;
 
         $obj->level = $activity->level;
         $obj->active = $activity->active && $template->active;
@@ -107,7 +110,7 @@ class CouponPack extends DbCouponPack
      */
     public function pass()
     {
-        return $this->active;
+        return $this->active && $this->coupon_size > $this->coupon_count;
     }
 
     /**
@@ -119,5 +122,18 @@ class CouponPack extends DbCouponPack
         $this->active = false;
 
         return $this->put([self::COL_ACTIVE]);
+    }
+
+    /**
+     * @return bool
+     * @throws ErrorException
+     */
+    public function use(): bool
+    {
+        if (!$this->refresh() || !$this->pass()) {
+            return false;
+        }
+
+        return $this->increase(self::COL_COUPON_COUNT, 1);
     }
 }
