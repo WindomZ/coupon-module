@@ -86,8 +86,7 @@ class Coupon extends DbCoupon
         }
 
         $obj = new Coupon();
-        $obj->name = $template->name;
-        $obj->desc = $template->desc;
+        $obj->owner_id = $owner_id;
         $obj->activity = $activity;
         $obj->activity_id = $activity->id;
         $obj->template = $template;
@@ -97,9 +96,17 @@ class Coupon extends DbCoupon
         $obj->batch = $batch;
         $obj->batch_id = $batch->id;
 
-        $obj->owner_id = $owner_id;
         $obj->level = $pack->level;
         $obj->active = $pack->active;
+
+        $obj->name = $template->name;
+        $obj->desc = $template->desc;
+        $obj->class = $template->class;
+        $obj->kind = $template->kind;
+        $obj->product_id = $template->product_id;
+        $obj->min_amount = $template->min_amount;
+        $obj->offer_amount = $template->offer_amount;
+
         $obj->dead_time = $pack->dead_time;
 
         return $obj;
@@ -123,17 +130,18 @@ class Coupon extends DbCoupon
      */
     public function post(): bool
     {
-        if (!Uuid::isValid($this->owner_id)) {
-            throw new ErrorException('"owner_id" should not be empty: '.$this->owner_id);
-        }
-        if (!Uuid::isValid($this->activity_id)) {
-            throw new ErrorException('"activity_id" should not be empty: '.$this->activity_id);
-        }
         if (!isset($this->activity)) {
             $this->activity = CouponActivity::object($this->activity_id);
         }
         if (!$this->activity) {
             throw new ErrorException('"activity_id" should be existed: '.$this->activity_id);
+        }
+
+        if (!isset($this->pack)) {
+            $this->pack = CouponPack::object($this->pack_id);
+        }
+        if (!$this->pack) {
+            throw new ErrorException('"pack_id" should be existed: '.$this->pack_id);
         }
 
         $count = $this->count(
@@ -142,12 +150,11 @@ class Coupon extends DbCoupon
                 self::COL_ACTIVITY_ID => $this->activity_id,
             ]
         );
-
         if ($count >= $this->activity->coupon_limit) {
             return false;
         }
 
-        if (!$this->activity->use()) {
+        if (!$this->pack->use()) {
             return false;
         }
 

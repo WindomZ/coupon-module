@@ -13,8 +13,6 @@ class CouponActivity extends BaseTemplate2
     const COL_URL = 'url';
     const COL_CLASS = 'class';
     const COL_KIND = 'kind';
-    const COL_COUPON_SIZE = 'coupon_size';
-    const COL_COUPON_USED = 'coupon_used';
     const COL_COUPON_LIMIT = 'coupon_limit';
     const COL_DEAD_TIME = 'dead_time';
 
@@ -32,16 +30,6 @@ class CouponActivity extends BaseTemplate2
      * @var int
      */
     public $kind = 0;
-
-    /**
-     * @var int
-     */
-    public $coupon_size = 0;
-
-    /**
-     * @var int
-     */
-    public $coupon_used = 0;
 
     /**
      * @var int
@@ -80,8 +68,6 @@ class CouponActivity extends BaseTemplate2
                 self::COL_URL => $this->url,
                 self::COL_CLASS => $this->class,
                 self::COL_KIND => $this->kind,
-                self::COL_COUPON_SIZE => $this->coupon_size,
-                self::COL_COUPON_USED => $this->coupon_used,
                 self::COL_COUPON_LIMIT => $this->coupon_limit,
                 self::COL_DEAD_TIME => $this->dead_time,
             ]
@@ -99,8 +85,6 @@ class CouponActivity extends BaseTemplate2
         $this->url = $data[self::COL_URL];
         $this->class = intval($data[self::COL_CLASS]);
         $this->kind = intval($data[self::COL_KIND]);
-        $this->coupon_size = intval($data[self::COL_COUPON_SIZE]);
-        $this->coupon_used = intval($data[self::COL_COUPON_USED]);
         $this->coupon_limit = intval($data[self::COL_COUPON_LIMIT]);
         $this->dead_time = $data[self::COL_DEAD_TIME];
 
@@ -129,12 +113,6 @@ class CouponActivity extends BaseTemplate2
         }
         if ($this->kind < 0) {
             $this->kind = 0;
-        }
-        if ($this->coupon_size <= 0) {
-            throw new ErrorException('"coupon_size" should be positive!');
-        }
-        if ($this->coupon_used < 0) {
-            throw new ErrorException('"coupon_used" should be positive!');
         }
         if (empty($this->dead_time)) {
             throw new ErrorException('"dead_time" should be a date: '.$this->dead_time);
