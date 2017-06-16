@@ -45,11 +45,13 @@ Coupon::setConfigPath('./config.yml');
 - 优惠卷活动(`CouponActivity`): 方便管理优惠卷的发放
 - 优惠卷模板(`CouponTemplate`): 方便管理优惠卷的样式
 - 优惠卷包(`CouponPack`): 方便统一生成优惠卷
+- 优惠卷批次(`CouponBatch`): 方便标记指定用户优惠卷批次
 - 优惠卷(`Coupon`): 指定用户的优惠卷
 
 ### 业务流程
 
-- 创建优惠卷：优惠卷活动(`CouponActivity`) -> 优惠卷模板(`CouponTemplate`) -> 优惠卷包(`CouponPack`) -> 优惠卷(`Coupon`)
+- 后台：优惠卷活动(`CouponActivity`) -> 优惠卷模板(`CouponTemplate`) -> 优惠卷包(`CouponPack`)
+- 业务：优惠卷包(`CouponPack`) -> 优惠卷批次(`CouponBatch`) -> 优惠卷(`Coupon`)
 
 ### 属性字段
 
@@ -103,6 +105,18 @@ Coupon::setConfigPath('./config.yml');
 |int|coupon_size|Y|Y|优惠卷派放总数|
 |int|coupon_count|N|N|优惠卷派放数量|
 |string|dead_time|Y|Y|截止时间|
+
+#### 优惠卷批次(`CouponBatch`)
+
+|类型|字段|必填|修改|描述|
+|---|---|:---:|:---:|---|
+|string|id|N|N|UUID|
+|string|post_time|N|N|创建时间|
+|string|put_time|N|N|修改时间|
+|string|owner_id|Y|N|用户UUID|
+|string|activity_id|Y|N|活动UUID|
+|string|template_id|Y|N|优惠卷模板UUID|
+|string|pack_id|Y|N|优惠卷包UUID|
 
 #### 优惠卷(`Coupon`)
 
@@ -174,7 +188,7 @@ Coupon::setConfigPath('./config.yml');
 - CouponTemplate::object($id)
   - @description 查询优惠卷模板(`CouponTemplate`)
   - @param
-    - string $id 优惠卷活动UUID
+    - string $id 优惠卷模板UUID
   - @return object
 
 - CouponTemplate::create($name, $desc, $min_amount, $offer_amount)
@@ -215,7 +229,7 @@ Coupon::setConfigPath('./config.yml');
 - CouponPack::object($id)
   - @description 查询优惠卷包(`CouponPack`)
   - @param
-    - string $id 优惠卷活动UUID
+    - string $id 优惠卷包UUID
   - @return object
 
 - CouponPack::create($name, $desc, $activity_id, $template_id, $coupon_size)
@@ -252,19 +266,56 @@ Coupon::setConfigPath('./config.yml');
   - @param
   - @return bool
 
+#### 优惠卷批次(`CouponBatch`)
+
+- CouponBatch::object($id)
+  - @description 查询优惠卷批次(`CouponBatch`)
+  - @param
+    - string $id 优惠卷批次UUID
+  - @return object
+
+- CouponBatch::create($owner_id, $activity_id, $template_id, $pack_id)
+  - @description 构建优惠卷批次(`CouponBatch`)
+  - @param
+    - string $owner_id 用户UUID
+    - string $activity_id 优惠卷活动UUID
+    - string $template_id 优惠卷模板UUID
+    - string $pack_id 优惠卷包UUID
+  - @return object
+
+- CouponBatch::list($where, $limit, $page, $order)
+  - @description 获取一组优惠卷批次(`CouponBatch`)
+  - @param
+    - array $where 筛选范围，选用`CouponBatch::COL_`开头的字段
+    - int $limit 筛选数量
+    - int $page 筛选页数
+    - array $order 筛选排序
+  - @return array
+
+- CouponBatch->post()
+  - @description 创建优惠卷批次(`CouponBatch`)
+  - @return bool
+
+- CouponBatch->put($columns)
+  - @description 修改优惠卷批次(`CouponBatch`)
+  - @param
+    - array $columns 标明修改的字段，选用`CouponBatch::COL_`开头的字段组成数组
+  - @return bool
+
 #### 优惠卷(`Coupon`)
 
 - Coupon::object($id)
   - @description 查询优惠卷(`Coupon`)
   - @param
-    - string $id 优惠卷活动UUID
+    - string $id 优惠卷UUID
   - @return object
 
-- Coupon::create($owner_id, $pack_id)
+- Coupon::create($owner_id, $pack_id, $batch_id)
   - @description 构建优惠卷(`Coupon`)
   - @param
     - string $owner_id 用户UUID
     - string $pack_id 优惠卷包UUID
+    - string $batch_id 优惠卷批次UUID
   - @return object
 
 - Coupon::list($where, $limit, $page, $order)
