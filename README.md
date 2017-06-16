@@ -1,6 +1,6 @@
 # coupon-module
 
-> Developing...
+> A coupon module component - fast, modularity and easy to deploy.
 
 [![Latest Stable Version](https://img.shields.io/packagist/v/windomz/coupon-module.svg?style=flat-square)](https://packagist.org/packages/windomz/coupon-module)
 [![Build Status](https://img.shields.io/travis/WindomZ/coupon-module/master.svg?style=flat-square)](https://travis-ci.org/WindomZ/coupon-module)
@@ -12,7 +12,8 @@
 - [x] CouponActivity
 - [x] CouponTemplate
 - [x] CouponPack = CouponActivity + CouponTemplate
-- [x] Coupon = one of CouponPack
+- [x] CouponBatch
+- [x] Coupon = one of CouponPack + CouponBatch
 
 ## Installation
 
@@ -36,7 +37,7 @@ If only for quick testing,
 you can run `./sql/coupondb.sql` in `MySQL` to quickly create a test database_
 
 Of course, you can also customize the `database name` based on `./sql/coupondb.sql`, 
-but note that the `table name` can not be _MODIFIED_!
+but note that the `table name` _CANNOT MODIFY_!
 
 In the project initialization, 
 load the specified configuration file through the following implementation:
