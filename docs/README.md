@@ -1,7 +1,5 @@
 # coupon-module
 
-> 开发中...
-
 ## 当前版本
 
 [![Latest Stable Version](https://img.shields.io/packagist/v/windomz/coupon-module.svg?style=flat-square)](https://packagist.org/packages/windomz/coupon-module)
