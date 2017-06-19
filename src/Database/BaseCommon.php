@@ -26,6 +26,8 @@ abstract class BaseCommon extends Base
     const WHERE_LTE = 5;
     const WHERE_BT = 6;
     const WHERE_NBT = 7;
+    const WHERE_LK = 8;
+    const WHERE_NLK = 9;
 
     /**
      * @param int $type
@@ -55,6 +57,12 @@ abstract class BaseCommon extends Base
                 break;
             case self::WHERE_NBT:
                 $key .= '[><]';
+                break;
+            case self::WHERE_LK:
+                $key .= '[~]';
+                break;
+            case self::WHERE_NLK:
+                $key .= '[!~]';
                 break;
         }
 
