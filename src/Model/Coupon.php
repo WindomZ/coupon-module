@@ -84,9 +84,9 @@ class Coupon extends DbCoupon
 
         $batch = null;
         if (empty($batch_id)) {
-            $batch = CouponBatch::create($owner_id, $activity->id, $template->id, $pack->id);
+            $batch = CouponBatch::create($owner_id, $activity->id);
             if (!$batch->post()) {
-                throw new ErrorException('"batch_id" should be existed: '.$pack->template_id);
+                throw new ErrorException('"batch_id" should be existed: '.$batch_id);
             }
         } else {
             $batch = CouponBatch::object($batch_id);

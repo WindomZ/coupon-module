@@ -45,16 +45,12 @@ class CouponBatch extends DbCoupon
     /**
      * @param string $owner_id
      * @param string $activity_id
-     * @param string $template_id
-     * @param string $pack_id
      * @return CouponBatch
      * @throws ErrorException
      */
     public static function create(
         string $owner_id,
-        string $activity_id,
-        string $template_id,
-        string $pack_id
+        string $activity_id
     ) {
         if (!Uuid::isValid($owner_id)) {
             throw new ErrorException('"owner_id" should be UUID: '.$owner_id);
@@ -62,18 +58,10 @@ class CouponBatch extends DbCoupon
         if (!Uuid::isValid($activity_id)) {
             throw new ErrorException('"activity_id" should be UUID: '.$activity_id);
         }
-        if (!Uuid::isValid($template_id)) {
-            throw new ErrorException('"template_id" should not be empty: '.$template_id);
-        }
-        if (!Uuid::isValid($pack_id)) {
-            throw new ErrorException('"pack_id" should be UUID: '.$pack_id);
-        }
 
         $obj = new CouponBatch();
         $obj->owner_id = $owner_id;
         $obj->activity_id = $activity_id;
-        $obj->template_id = $template_id;
-        $obj->pack_id = $pack_id;
 
         return $obj;
     }
