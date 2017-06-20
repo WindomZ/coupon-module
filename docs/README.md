@@ -113,8 +113,6 @@ Coupon::setConfigPath('./config.yml');
 |string|put_time|N|N|修改时间|
 |string|owner_id|Y|N|用户UUID|
 |string|activity_id|Y|N|活动UUID|
-|string|template_id|Y|N|优惠卷模板UUID|
-|string|pack_id|Y|N|优惠卷包UUID|
 
 #### 优惠卷(`Coupon`)
 
@@ -272,13 +270,11 @@ Coupon::setConfigPath('./config.yml');
     - string $id 优惠卷批次UUID
   - @return object
 
-- CouponBatch::create($owner_id, $activity_id, $template_id, $pack_id)
+- CouponBatch::create($owner_id, $activity_id)
   - @description 构建优惠卷批次(`CouponBatch`)
   - @param
     - string $owner_id 用户UUID
     - string $activity_id 优惠卷活动UUID
-    - string $template_id 优惠卷模板UUID
-    - string $pack_id 优惠卷包UUID
   - @return object
 
 - CouponBatch::list($where, $limit, $page, $order)
