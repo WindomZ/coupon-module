@@ -18,14 +18,16 @@ abstract class BaseCommon extends Base
         return json_decode(json_encode($obj), true);
     }
 
-    const WHERE_EQ = 0;
-    const WHERE_NEQ = 1;
-    const WHERE_GT = 2;
-    const WHERE_GTE = 3;
-    const WHERE_LT = 4;
-    const WHERE_LTE = 5;
-    const WHERE_BT = 6;
-    const WHERE_NBT = 7;
+    const WHERE_EQ = 0; // = *
+    const WHERE_NEQ = 1; //  != *
+    const WHERE_GT = 2; // > *
+    const WHERE_GTE = 3; // >= *
+    const WHERE_LT = 4; // < *
+    const WHERE_LTE = 5; // <= *
+    const WHERE_BT = 6; // BETWEEN * AND *
+    const WHERE_NBT = 7; // NOT BETWEEN * AND *
+    const WHERE_LK = 8; // LIKE %*%
+    const WHERE_NLK = 9; // NOT LIKE %*%
 
     /**
      * @param int $type
@@ -55,6 +57,12 @@ abstract class BaseCommon extends Base
                 break;
             case self::WHERE_NBT:
                 $key .= '[><]';
+                break;
+            case self::WHERE_LK:
+                $key .= '[~]';
+                break;
+            case self::WHERE_NLK:
+                $key .= '[!~]';
                 break;
         }
 

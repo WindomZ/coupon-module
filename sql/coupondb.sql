@@ -29,6 +29,34 @@ create table coupondb.cp_coupon
 )
 ;
 
+create index cp_coupon_active_dead_time_index
+	on coupondb.cp_coupon (active, dead_time)
+;
+
+create index cp_coupon_activity_id_index
+	on coupondb.cp_coupon (activity_id)
+;
+
+create index cp_coupon_class_kind_index
+	on coupondb.cp_coupon (class, kind)
+;
+
+create index cp_coupon_owner_id_index
+	on coupondb.cp_coupon (owner_id)
+;
+
+create index cp_coupon_template_id_index
+	on coupondb.cp_coupon (template_id)
+;
+
+create index cp_coupon_batch_id_index
+	on coupondb.cp_coupon (batch_id)
+;
+
+create index cp_coupon_pack_id_index
+	on coupondb.cp_coupon (pack_id)
+;
+
 create table coupondb.cp_coupon_activity
 (
 	id char(36) not null,
@@ -48,6 +76,14 @@ create table coupondb.cp_coupon_activity
 )
 ;
 
+create index cp_coupon_activity_active_dead_time_index
+	on coupondb.cp_coupon_activity (active, dead_time)
+;
+
+create index cp_coupon_activity_class_kind_index
+	on coupondb.cp_coupon_activity (class, kind)
+;
+
 create table coupondb.cp_coupon_batch
 (
 	id char(36) not null,
@@ -55,11 +91,17 @@ create table coupondb.cp_coupon_batch
 	put_time datetime default CURRENT_TIMESTAMP not null,
 	owner_id char(36) not null,
 	activity_id char(36) not null,
-	template_id char(36) not null,
-	pack_id char(36) not null,
 	constraint cp_coupon_batch_id_uindex
 		unique (id)
 )
+;
+
+create index cp_coupon_batch_activity_id_index
+	on coupondb.cp_coupon_batch (activity_id)
+;
+
+create index cp_coupon_batch_owner_id_index
+	on coupondb.cp_coupon_batch (owner_id)
 ;
 
 create table coupondb.cp_coupon_pack
@@ -81,6 +123,18 @@ create table coupondb.cp_coupon_pack
 )
 ;
 
+create index cp_coupon_pack_active_dead_time_index
+	on coupondb.cp_coupon_pack (active, dead_time)
+;
+
+create index cp_coupon_pack_activity_id_index
+	on coupondb.cp_coupon_pack (activity_id)
+;
+
+create index cp_coupon_pack_template_id_index
+	on coupondb.cp_coupon_pack (template_id)
+;
+
 create table coupondb.cp_coupon_template
 (
 	id char(36) not null,
@@ -98,5 +152,17 @@ create table coupondb.cp_coupon_template
 	constraint cp_coupon_template_id_uindex
 		unique (id)
 )
+;
+
+create index cp_coupon_template_active_index
+	on coupondb.cp_coupon_template (active)
+;
+
+create index cp_coupon_template_class_kind_index
+	on coupondb.cp_coupon_template (class, kind)
+;
+
+create index cp_coupon_template_product_id_index
+	on coupondb.cp_coupon_template (product_id)
 ;
 
