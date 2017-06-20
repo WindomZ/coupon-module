@@ -91,8 +91,6 @@ create table coupondb.cp_coupon_batch
 	put_time datetime default CURRENT_TIMESTAMP not null,
 	owner_id char(36) not null,
 	activity_id char(36) not null,
-	template_id char(36) not null,
-	pack_id char(36) not null,
 	constraint cp_coupon_batch_id_uindex
 		unique (id)
 )
@@ -104,14 +102,6 @@ create index cp_coupon_batch_activity_id_index
 
 create index cp_coupon_batch_owner_id_index
 	on coupondb.cp_coupon_batch (owner_id)
-;
-
-create index cp_coupon_batch_pack_id_index
-	on coupondb.cp_coupon_batch (pack_id)
-;
-
-create index cp_coupon_batch_template_id_index
-	on coupondb.cp_coupon_batch (template_id)
 ;
 
 create table coupondb.cp_coupon_pack
