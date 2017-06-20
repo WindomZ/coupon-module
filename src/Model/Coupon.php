@@ -200,6 +200,6 @@ class Coupon extends DbCoupon
         }
         $this->active = false;
 
-        return $this->increase(self::COL_USED_COUNT, 1, [self::COL_ACTIVE]);
+        return $this->increase(self::COL_USED_COUNT, 1, [self::COL_ACTIVE => true], [self::COL_ACTIVE => false]);
     }
 }

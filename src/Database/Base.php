@@ -174,7 +174,7 @@ abstract class Base
 
         $this->beforePut();
 
-        $data = array_merge($data, [$column.'[+]' => $count]);
+        $data[$column.'[+]'] = $count;
         if (empty($data)) {
             return false;
         }
