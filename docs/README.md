@@ -336,13 +336,22 @@ Coupon::setConfigPath('./config.yml');
   - @param
   - @return bool
 
+- Coupon->use()
+  - @description 使用优惠卷(`Coupon`)
+  - @param
+  - @return bool
+
+#### 优惠卷管理(`CouponManager`)
+
+- CouponManager::clean()
+  - @description 注销所有过期的优惠卷活动(`CouponActivity`)/优惠卷包(`CouponPack`)/优惠卷(`Coupon`)
+  - @return array 注销个数
+
 #### 公共方法
 
-- *::toJSON($obj)
+- *->toJSON()
   - @description 转为JSON格式对象
-  - @demo `Coupon::toJSON(Coupon::get('xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'))`
-  - @param
-    - object $obj 对象
+  - @demo `$obj->toJSON()`
   - @return object
 
 - *::where($type, $key)

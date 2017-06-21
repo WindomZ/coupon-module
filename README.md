@@ -1,6 +1,6 @@
 # coupon-module
 
-> A coupon module component - fast, modularity and easy to deploy.
+> A coupon module component - modularity and easy to deploy.
 
 [![Latest Stable Version](https://img.shields.io/packagist/v/windomz/coupon-module.svg?style=flat-square)](https://packagist.org/packages/windomz/coupon-module)
 [![Build Status](https://img.shields.io/travis/WindomZ/coupon-module/master.svg?style=flat-square)](https://travis-ci.org/WindomZ/coupon-module)
