@@ -43,7 +43,7 @@ class ModelTest extends TestCase
                 $this->assertNotEmpty($e);
             }
 
-            $obj->dead_time = Date::get_now_time();
+            $obj->dead_time = Date::get_next_time(2);
             $this->assertTrue($obj->post());
 
             $list = CouponActivity::list([CouponActivity::COL_NAME => 'name'], 10, 0);
@@ -75,7 +75,8 @@ class ModelTest extends TestCase
         $this->assertTrue($ins->disable());
 
         $ins->active = true;
-        $this->assertTrue($ins->put([CouponActivity::COL_ACTIVE]));
+        $ins->dead_time = Date::get_next_time(2);
+        $this->assertTrue($ins->put([CouponActivity::COL_ACTIVE, CouponActivity::COL_DEAD_TIME]));
 
         $ins = CouponActivity::object($ins->id);
         self::assertNotEmpty($ins);
@@ -200,7 +201,8 @@ class ModelTest extends TestCase
         $this->assertTrue($ins->disable());
 
         $ins->active = true;
-        $this->assertTrue($ins->put([CouponPack::COL_ACTIVE]));
+        $ins->dead_time = $activity->dead_time;
+        $this->assertTrue($ins->put([CouponPack::COL_ACTIVE, CouponPack::COL_DEAD_TIME]));
 
         $ins = CouponPack::object($ins->id);
         self::assertNotEmpty($ins);
@@ -266,7 +268,8 @@ class ModelTest extends TestCase
         $this->assertFalse($ins->use());
 
         $ins->active = true;
-        $this->assertTrue($ins->put([Coupon::COL_ACTIVE]));
+        $ins->dead_time = $pack->dead_time;
+        $this->assertTrue($ins->put([Coupon::COL_ACTIVE, Coupon::COL_DEAD_TIME]));
 
         $this->assertTrue($ins->use());
 
@@ -297,6 +300,8 @@ class ModelTest extends TestCase
      */
     public function testManager($activity, $pack, $coupon)
     {
+        sleep(2);
+
         self::assertNotEmpty($activity);
         $this->assertTrue($activity->active);
 
