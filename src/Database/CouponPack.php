@@ -16,6 +16,7 @@ class CouponPack extends BaseTemplate2
     const COL_COUPON_SIZE = 'coupon_size';
     const COL_COUPON_COUNT = 'coupon_count';
     const COL_DEAD_TIME = 'dead_time';
+    const COL_DEAD_DAY = 'dead_day';
 
     /**
      * @var string
@@ -53,6 +54,11 @@ class CouponPack extends BaseTemplate2
     public $dead_time;
 
     /**
+     * @var int
+     */
+    public $dead_day = 0;
+
+    /**
      * @return CouponPack
      */
     protected function newObject()
@@ -83,6 +89,7 @@ class CouponPack extends BaseTemplate2
                 self::COL_COUPON_SIZE => $this->coupon_size,
                 self::COL_COUPON_COUNT => $this->coupon_count,
                 self::COL_DEAD_TIME => $this->dead_time,
+                self::COL_DEAD_DAY => $this->dead_day,
             ]
         );
     }
@@ -100,6 +107,7 @@ class CouponPack extends BaseTemplate2
         $this->coupon_size = intval($data[self::COL_COUPON_SIZE]);
         $this->coupon_count = intval($data[self::COL_COUPON_COUNT]);
         $this->dead_time = $data[self::COL_DEAD_TIME];
+        $this->dead_day = intval($data[self::COL_DEAD_DAY]);
 
         return $this;
     }
@@ -135,6 +143,9 @@ class CouponPack extends BaseTemplate2
         }
         if (empty($this->dead_time)) {
             throw new ErrorException('"dead_time" should be a date!');
+        }
+        if ($this->dead_day < 0) {
+            $this->dead_day = 0;
         }
 
         parent::beforePost();

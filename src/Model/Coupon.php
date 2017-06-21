@@ -116,6 +116,9 @@ class Coupon extends DbCoupon
         $obj->offer_amount = $template->offer_amount;
 
         $obj->dead_time = $pack->dead_time;
+        if ($pack->dead_day > 0) {
+            $obj->dead_time = Date::get_next_zero_time(86400 * $pack->dead_day);
+        }
 
         return $obj;
     }
