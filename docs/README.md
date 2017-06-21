@@ -103,6 +103,7 @@ Coupon::setConfigPath('./config.yml');
 |int|coupon_size|Y|Y|优惠卷派放总数|
 |int|coupon_count|N|N|优惠卷派放数量|
 |string|dead_time|Y|Y|截止时间|
+|int|dead_day|N|Y|截止天数，若大于0则影响优惠券的截止日期|
 
 #### 优惠卷批次(`CouponBatch`)
 
