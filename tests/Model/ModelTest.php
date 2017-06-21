@@ -306,11 +306,10 @@ class ModelTest extends TestCase
         self::assertNotEmpty($coupon);
         $this->assertTrue($coupon->active);
 
-        try {
-            CouponManager::clean();
-        } catch (ErrorException $e) {
-            self::assertEmpty($e);
-        }
+        $r = CouponManager::clean();
+        $this->assertEquals($r['CouponActivity'], 1);
+        $this->assertEquals($r['CouponPack'], 1);
+        $this->assertEquals($r['Coupon'], 1);
 
         $activity = CouponActivity::object($activity->id);
         $this->assertFalse($activity->active);
