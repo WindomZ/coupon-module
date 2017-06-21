@@ -6,16 +6,14 @@ namespace CouponModule\Database;
  * Class BaseCommon
  * @package CouponModule\Database
  */
-abstract class BaseCommon extends Base
+abstract class BaseCommon extends BaseDb
 {
-
     /**
-     * @param mixed $obj
      * @return mixed
      */
-    public static function toJSON($obj)
+    public function toJSON()
     {
-        return json_decode(json_encode($obj), true);
+        return json_decode(json_encode($this), true);
     }
 
     const WHERE_EQ = 0; // = *
