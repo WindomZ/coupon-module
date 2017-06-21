@@ -60,12 +60,14 @@ class CouponPack extends BaseTemplate2
         return new CouponPack();
     }
 
+    const TABLE_NAME = 'coupon_pack';
+
     /**
      * @return string
      */
     protected function getTableName(): string
     {
-        return 'coupon_pack';
+        return self::TABLE_NAME;
     }
 
     /**

@@ -49,12 +49,14 @@ class CouponTemplate extends BaseTemplate2
         return new CouponTemplate();
     }
 
+    const TABLE_NAME = 'coupon_template';
+
     /**
      * @return string
      */
     protected function getTableName(): string
     {
-        return 'coupon_template';
+        return self::TABLE_NAME;
     }
 
     /**

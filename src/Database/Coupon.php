@@ -89,12 +89,14 @@ class Coupon extends CouponTemplate
         return new Coupon();
     }
 
+    const TABLE_NAME = 'coupon';
+
     /**
      * @return string
      */
     protected function getTableName(): string
     {
-        return 'coupon';
+        return self::TABLE_NAME;
     }
 
     /**
