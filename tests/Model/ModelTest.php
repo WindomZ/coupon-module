@@ -6,6 +6,7 @@ use CouponModule\Coupon as _Coupon;
 use CouponModule\Exception\ErrorException;
 use CouponModule\Model\CouponActivity;
 use CouponModule\Model\Coupon;
+use CouponModule\Model\CouponManager;
 use CouponModule\Model\CouponTemplate;
 use CouponModule\Model\CouponPack;
 use CouponModule\Util\Date;
@@ -262,13 +263,62 @@ class ModelTest extends TestCase
 
         $this->assertTrue($ins->disable());
 
+        $this->assertFalse($ins->use());
+
         $ins->active = true;
         $this->assertTrue($ins->put([Coupon::COL_ACTIVE]));
 
+        $this->assertTrue($ins->use());
+
         $ins = Coupon::object($ins->id);
         self::assertNotEmpty($ins);
+        $this->assertEquals($ins->used_count, 1);
+        $this->assertFalse($ins->active);
+
+        $ins->used_count = 0;
+        $ins->active = true;
+        $this->assertTrue($ins->put([Coupon::COL_USED_COUNT, Coupon::COL_ACTIVE]));
+
+        $ins = Coupon::object($ins->id);
+        self::assertNotEmpty($ins);
+        $this->assertEquals($ins->used_count, 0);
         $this->assertTrue($ins->active);
 
         return $ins;
+    }
+
+    /**
+     * @depends testCouponActivity
+     * @depends testCouponPack
+     * @depends testCoupon
+     * @param CouponActivity $activity
+     * @param CouponPack $pack
+     * @param Coupon $coupon
+     */
+    public function testManager($activity, $pack, $coupon)
+    {
+        self::assertNotEmpty($activity);
+        $this->assertTrue($activity->active);
+
+        self::assertNotEmpty($pack);
+        $this->assertTrue($pack->active);
+
+        self::assertNotEmpty($coupon);
+        $this->assertTrue($coupon->active);
+
+        try {
+            CouponManager::clean();
+        } catch (ErrorException $e) {
+            self::assertEmpty($e);
+        }
+
+        $activity = CouponActivity::object($activity->id);
+        $this->assertFalse($activity->active);
+
+        $pack = CouponPack::object($pack->id);
+        $this->assertFalse($pack->active);
+
+        $coupon = Coupon::object($coupon->id);
+        $this->assertFalse($coupon->active);
     }
 }
