@@ -152,16 +152,16 @@ class Coupon extends DbCoupon
             throw new ErrorException('"pack_id" should be existed: '.$this->pack_id);
         }
 
-        $count = $this->count(
-            [
-                self::COL_OWNER_ID => $this->owner_id,
-                self::COL_ACTIVITY_ID => $this->activity_id,
-            ]
-        );
-        if ($this->activity->coupon_limit > 0
-            && $count >= $this->activity->coupon_limit
-        ) {
-            return false;
+        if ($this->activity->coupon_limit > 0) {
+            $count = $this->count(
+                [
+                    self::COL_OWNER_ID => $this->owner_id,
+                    self::COL_ACTIVITY_ID => $this->activity_id,
+                ]
+            );
+            if ($count >= $this->activity->coupon_limit) {
+                return false;
+            }
         }
 
         if (!$this->pack->use()) {
