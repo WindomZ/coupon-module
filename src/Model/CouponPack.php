@@ -4,6 +4,7 @@ namespace CouponModule\Model;
 
 use CouponModule\Database\CouponPack as DbCouponPack;
 use CouponModule\Exception\ErrorException;
+use CouponModule\Util\Date;
 use CouponModule\Util\Uuid;
 
 /**
@@ -110,7 +111,8 @@ class CouponPack extends DbCouponPack
      */
     public function pass()
     {
-        return $this->active && $this->coupon_size > $this->coupon_count;
+        return $this->active && $this->coupon_size > $this->coupon_count
+            && Date::after($this->dead_time);
     }
 
     /**

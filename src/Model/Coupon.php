@@ -4,6 +4,7 @@ namespace CouponModule\Model;
 
 use CouponModule\Database\Coupon as DbCoupon;
 use CouponModule\Exception\ErrorException;
+use CouponModule\Util\Date;
 use CouponModule\Util\Uuid;
 
 /**
@@ -175,7 +176,8 @@ class Coupon extends DbCoupon
      */
     public function pass()
     {
-        return $this->active && $this->used_count === 0;
+        return $this->active && $this->used_count === 0
+            && Date::after($this->dead_time);
     }
 
     /**
