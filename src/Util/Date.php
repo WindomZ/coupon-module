@@ -22,6 +22,14 @@ class Date
     }
 
     /**
+     * @return int
+     */
+    public static function get_now_zero_time_stamp()
+    {
+        return Date::get_next_zero_time_stamp();
+    }
+
+    /**
      * @return bool|string
      */
     public static function get_now_time()
@@ -30,14 +38,35 @@ class Date
     }
 
     /**
+     * @return bool|string
+     */
+    public static function get_now_zero_time()
+    {
+        return Date::get_next_zero_time();
+    }
+
+    /**
      * @param int $second 秒
      * @return bool|string
      */
     public static function get_next_time($second = 0)
     {
-        $time = Date::get_now_time_stamp() + $second;
+        return date(
+            self::DATE_FORMAT,
+            Date::get_now_time_stamp() + $second
+        );
+    }
 
-        return date(self::DATE_FORMAT, $time);
+    /**
+     * @param int $second 秒
+     * @return bool|string
+     */
+    public static function get_next_zero_time($second = 0)
+    {
+        return date(
+            self::DATE_FORMAT,
+            Date::get_now_zero_time_stamp() + $second
+        );
     }
 
     /**
@@ -46,9 +75,16 @@ class Date
      */
     public static function get_next_time_stamp($second = 0)
     {
-        $time = time() + $second;
+        return time() + $second;
+    }
 
-        return $time;
+    /**
+     * @param int $second
+     * @return int
+     */
+    public static function get_next_zero_time_stamp($second = 0)
+    {
+        return strtotime(date('Y-m-d', time())) + $second;
     }
 
     /**

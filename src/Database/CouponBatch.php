@@ -32,12 +32,14 @@ class CouponBatch extends BaseId
         return new CouponBatch();
     }
 
+    const TABLE_NAME = 'coupon_batch';
+
     /**
      * @return string
      */
     protected function getTableName(): string
     {
-        return 'coupon_batch';
+        return self::TABLE_NAME;
     }
 
     /**

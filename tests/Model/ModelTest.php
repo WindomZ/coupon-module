@@ -6,6 +6,7 @@ use CouponModule\Coupon as _Coupon;
 use CouponModule\Exception\ErrorException;
 use CouponModule\Model\CouponActivity;
 use CouponModule\Model\Coupon;
+use CouponModule\Model\CouponManager;
 use CouponModule\Model\CouponTemplate;
 use CouponModule\Model\CouponPack;
 use CouponModule\Util\Date;
@@ -42,7 +43,7 @@ class ModelTest extends TestCase
                 $this->assertNotEmpty($e);
             }
 
-            $obj->dead_time = Date::get_now_time();
+            $obj->dead_time = Date::get_next_time(2);
             $this->assertTrue($obj->post());
 
             $list = CouponActivity::list([CouponActivity::COL_NAME => 'name'], 10, 0);
@@ -74,7 +75,8 @@ class ModelTest extends TestCase
         $this->assertTrue($ins->disable());
 
         $ins->active = true;
-        $this->assertTrue($ins->put([CouponActivity::COL_ACTIVE]));
+        $ins->dead_time = Date::get_next_time(2);
+        $this->assertTrue($ins->put([CouponActivity::COL_ACTIVE, CouponActivity::COL_DEAD_TIME]));
 
         $ins = CouponActivity::object($ins->id);
         self::assertNotEmpty($ins);
@@ -199,7 +201,8 @@ class ModelTest extends TestCase
         $this->assertTrue($ins->disable());
 
         $ins->active = true;
-        $this->assertTrue($ins->put([CouponPack::COL_ACTIVE]));
+        $ins->dead_time = $activity->dead_time;
+        $this->assertTrue($ins->put([CouponPack::COL_ACTIVE, CouponPack::COL_DEAD_TIME]));
 
         $ins = CouponPack::object($ins->id);
         self::assertNotEmpty($ins);
@@ -262,13 +265,64 @@ class ModelTest extends TestCase
 
         $this->assertTrue($ins->disable());
 
+        $this->assertFalse($ins->use());
+
         $ins->active = true;
-        $this->assertTrue($ins->put([Coupon::COL_ACTIVE]));
+        $ins->dead_time = $pack->dead_time;
+        $this->assertTrue($ins->put([Coupon::COL_ACTIVE, Coupon::COL_DEAD_TIME]));
+
+        $this->assertTrue($ins->use());
 
         $ins = Coupon::object($ins->id);
         self::assertNotEmpty($ins);
+        $this->assertEquals($ins->used_count, 1);
+        $this->assertFalse($ins->active);
+
+        $ins->used_count = 0;
+        $ins->active = true;
+        $this->assertTrue($ins->put([Coupon::COL_USED_COUNT, Coupon::COL_ACTIVE]));
+
+        $ins = Coupon::object($ins->id);
+        self::assertNotEmpty($ins);
+        $this->assertEquals($ins->used_count, 0);
         $this->assertTrue($ins->active);
 
         return $ins;
+    }
+
+    /**
+     * @depends testCouponActivity
+     * @depends testCouponPack
+     * @depends testCoupon
+     * @param CouponActivity $activity
+     * @param CouponPack $pack
+     * @param Coupon $coupon
+     */
+    public function testManager($activity, $pack, $coupon)
+    {
+        sleep(2);
+
+        self::assertNotEmpty($activity);
+        $this->assertTrue($activity->active);
+
+        self::assertNotEmpty($pack);
+        $this->assertTrue($pack->active);
+
+        self::assertNotEmpty($coupon);
+        $this->assertTrue($coupon->active);
+
+        $r = CouponManager::clean();
+        $this->assertEquals($r['CouponActivity'], 1);
+        $this->assertEquals($r['CouponPack'], 1);
+        $this->assertEquals($r['Coupon'], 1);
+
+        $activity = CouponActivity::object($activity->id);
+        $this->assertFalse($activity->active);
+
+        $pack = CouponPack::object($pack->id);
+        $this->assertFalse($pack->active);
+
+        $coupon = Coupon::object($coupon->id);
+        $this->assertFalse($coupon->active);
     }
 }

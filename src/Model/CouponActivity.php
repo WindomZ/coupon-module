@@ -4,6 +4,7 @@ namespace CouponModule\Model;
 
 use CouponModule\Database\CouponActivity as DbCouponActivity;
 use CouponModule\Exception\ErrorException;
+use CouponModule\Util\Date;
 
 /**
  * Class CouponActivity
@@ -85,7 +86,7 @@ class CouponActivity extends DbCouponActivity
      */
     public function pass()
     {
-        return $this->active;
+        return $this->active && Date::after($this->dead_time);
     }
 
     /**

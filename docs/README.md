@@ -103,6 +103,7 @@ Coupon::setConfigPath('./config.yml');
 |int|coupon_size|Y|Y|优惠卷派放总数|
 |int|coupon_count|N|N|优惠卷派放数量|
 |string|dead_time|Y|Y|截止时间|
+|int|dead_day|N|Y|截止天数，若大于0则影响优惠券的截止日期|
 
 #### 优惠卷批次(`CouponBatch`)
 
@@ -336,13 +337,22 @@ Coupon::setConfigPath('./config.yml');
   - @param
   - @return bool
 
+- Coupon->use()
+  - @description 使用优惠卷(`Coupon`)
+  - @param
+  - @return bool
+
+#### 优惠卷管理(`CouponManager`)
+
+- CouponManager::clean()
+  - @description 注销所有过期的优惠卷活动(`CouponActivity`)/优惠卷包(`CouponPack`)/优惠卷(`Coupon`)
+  - @return array 注销个数
+
 #### 公共方法
 
-- *::toJSON($obj)
+- *->toJSON()
   - @description 转为JSON格式对象
-  - @demo `Coupon::toJSON(Coupon::get('xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'))`
-  - @param
-    - object $obj 对象
+  - @demo `$obj->toJSON()`
   - @return object
 
 - *::where($type, $key)

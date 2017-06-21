@@ -14,7 +14,7 @@ class DateTest extends TestCase
     /**
      *
      */
-    public function test_get_now_time_stamp()
+    public function test_get_time_stamp()
     {
         $this->assertNotEmpty(Date::get_now_time_stamp());
         $this->assertEquals(Date::get_now_time_stamp(), time());
@@ -23,9 +23,20 @@ class DateTest extends TestCase
     /**
      *
      */
-    public function test_get_now_time()
+    public function test_get_time()
     {
         $this->assertEquals(gettype(Date::get_now_time()), 'string');
+
+        $this->assertEquals(
+            substr(Date::get_next_time(), 0, 10),
+            substr(Date::get_next_zero_time(), 0, 10)
+        );
+        $this->assertEquals(
+            substr(Date::get_next_time(86400), 0, 10),
+            substr(Date::get_next_zero_time(86400), 0, 10)
+        );
+
+        $this->assertEquals(substr(Date::get_next_zero_time(), 11, 8), '00:00:00');
     }
 
     /**

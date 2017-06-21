@@ -4,6 +4,7 @@ namespace CouponModule\Model;
 
 use CouponModule\Database\Coupon as DbCoupon;
 use CouponModule\Exception\ErrorException;
+use CouponModule\Util\Date;
 use CouponModule\Util\Uuid;
 
 /**
@@ -115,6 +116,9 @@ class Coupon extends DbCoupon
         $obj->offer_amount = $template->offer_amount;
 
         $obj->dead_time = $pack->dead_time;
+        if ($pack->dead_day > 0) {
+            $obj->dead_time = Date::get_next_zero_time(86400 * $pack->dead_day);
+        }
 
         return $obj;
     }
@@ -151,16 +155,16 @@ class Coupon extends DbCoupon
             throw new ErrorException('"pack_id" should be existed: '.$this->pack_id);
         }
 
-        $count = $this->count(
-            [
-                self::COL_OWNER_ID => $this->owner_id,
-                self::COL_ACTIVITY_ID => $this->activity_id,
-            ]
-        );
-        if ($this->activity->coupon_limit > 0
-            && $count >= $this->activity->coupon_limit
-        ) {
-            return false;
+        if ($this->activity->coupon_limit > 0) {
+            $count = $this->count(
+                [
+                    self::COL_OWNER_ID => $this->owner_id,
+                    self::COL_ACTIVITY_ID => $this->activity_id,
+                ]
+            );
+            if ($count >= $this->activity->coupon_limit) {
+                return false;
+            }
         }
 
         if (!$this->pack->use()) {
@@ -175,7 +179,8 @@ class Coupon extends DbCoupon
      */
     public function pass()
     {
-        return $this->active && $this->used_count === 0;
+        return $this->active && $this->used_count === 0
+            && Date::after($this->dead_time);
     }
 
     /**
@@ -200,6 +205,6 @@ class Coupon extends DbCoupon
         }
         $this->active = false;
 
-        return $this->increase(self::COL_USED_COUNT, 1, [self::COL_ACTIVE]);
+        return $this->increase(self::COL_USED_COUNT, 1, [], [self::COL_ACTIVE => false]);
     }
 }
