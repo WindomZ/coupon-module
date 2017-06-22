@@ -12,3 +12,5 @@ gen
 
 # Development
 *.sh
+*.zip
+*.tar
