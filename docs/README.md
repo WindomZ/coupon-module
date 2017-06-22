@@ -177,7 +177,6 @@ Coupon::setConfigPath('./config.yml');
 
 - CouponActivity->disable()
   - @description 取消优惠卷活动(`CouponActivity`)
-  - @param
   - @return bool
 
 #### 优惠卷模板(`CouponTemplate`)
@@ -218,7 +217,6 @@ Coupon::setConfigPath('./config.yml');
 
 - CouponTemplate->disable()
   - @description 取消优惠卷模板(`CouponTemplate`)
-  - @param
   - @return bool
 
 #### 优惠卷包(`CouponPack`)
@@ -260,7 +258,6 @@ Coupon::setConfigPath('./config.yml');
 
 - CouponPack->disable()
   - @description 取消优惠卷包(`CouponPack`)
-  - @param
   - @return bool
 
 #### 优惠卷批次(`CouponBatch`)
@@ -334,12 +331,10 @@ Coupon::setConfigPath('./config.yml');
 
 - Coupon->disable()
   - @description 取消优惠卷(`Coupon`)
-  - @param
   - @return bool
 
 - Coupon->use()
   - @description 使用优惠卷(`Coupon`)
-  - @param
   - @return bool
 
 #### 优惠卷管理(`CouponManager`)
