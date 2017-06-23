@@ -38,13 +38,13 @@ class ModelTest extends TestCase
             $obj->class = 1;
             $obj->kind = 2;
             try {
-                $this->assertFalse($obj->post());
+                self::assertFalse($obj->post());
             } catch (ErrorException $e) {
-                $this->assertNotEmpty($e);
+                self::assertNotEmpty($e);
             }
 
             $obj->dead_time = Date::get_next_time(2);
-            $this->assertTrue($obj->post());
+            self::assertTrue($obj->post());
 
             $list = CouponActivity::list([CouponActivity::COL_NAME => 'name'], 10, 0);
         }
@@ -55,32 +55,32 @@ class ModelTest extends TestCase
         $ins = $list['data'][0];
         self::assertNotEmpty($ins);
 
-        $this->assertEquals($ins->name, 'name');
-        $this->assertEquals($ins->desc, '这是描述');
-        $this->assertEquals($ins->coupon_limit, 1);
-        $this->assertEquals($ins->level, 1);
-        $this->assertEquals($ins->class, 1);
-        $this->assertEquals($ins->kind, 2);
+        self::assertEquals($ins->name, 'name');
+        self::assertEquals($ins->desc, '这是描述');
+        self::assertEquals($ins->coupon_limit, 1);
+        self::assertEquals($ins->level, 1);
+        self::assertEquals($ins->class, 1);
+        self::assertEquals($ins->kind, 2);
 
         $ins = CouponActivity::object($ins->id);
         self::assertNotEmpty($ins);
 
-        $this->assertEquals($ins->name, 'name');
-        $this->assertEquals($ins->desc, '这是描述');
-        $this->assertEquals($ins->coupon_limit, 1);
-        $this->assertEquals($ins->level, 1);
-        $this->assertEquals($ins->class, 1);
-        $this->assertEquals($ins->kind, 2);
+        self::assertEquals($ins->name, 'name');
+        self::assertEquals($ins->desc, '这是描述');
+        self::assertEquals($ins->coupon_limit, 1);
+        self::assertEquals($ins->level, 1);
+        self::assertEquals($ins->class, 1);
+        self::assertEquals($ins->kind, 2);
 
-        $this->assertTrue($ins->disable());
+        self::assertTrue($ins->disable());
 
         $ins->active = true;
         $ins->dead_time = Date::get_next_time(2);
-        $this->assertTrue($ins->put([CouponActivity::COL_ACTIVE, CouponActivity::COL_DEAD_TIME]));
+        self::assertTrue($ins->put([CouponActivity::COL_ACTIVE, CouponActivity::COL_DEAD_TIME]));
 
         $ins = CouponActivity::object($ins->id);
         self::assertNotEmpty($ins);
-        $this->assertTrue($ins->active);
+        self::assertTrue($ins->active);
 
         return $ins;
     }
@@ -104,7 +104,7 @@ class ModelTest extends TestCase
             $obj->level = 2;
             $obj->class = 2;
             $obj->kind = 4;
-            $this->assertTrue($obj->post());
+            self::assertTrue($obj->post());
 
             $list = CouponTemplate::list([CouponTemplate::COL_NAME => 'name'], 10, 0);
         }
@@ -115,33 +115,33 @@ class ModelTest extends TestCase
         $ins = $list['data'][0];
         self::assertNotEmpty($ins);
 
-        $this->assertEquals($ins->name, 'name');
-        $this->assertEquals($ins->desc, '这是描述');
-        $this->assertEquals($ins->min_amount, 100);
-        $this->assertEquals($ins->offer_amount, 200);
-        $this->assertEquals($ins->level, 2);
-        $this->assertEquals($ins->class, 2);
-        $this->assertEquals($ins->kind, 4);
+        self::assertEquals($ins->name, 'name');
+        self::assertEquals($ins->desc, '这是描述');
+        self::assertEquals($ins->min_amount, 100);
+        self::assertEquals($ins->offer_amount, 200);
+        self::assertEquals($ins->level, 2);
+        self::assertEquals($ins->class, 2);
+        self::assertEquals($ins->kind, 4);
 
         $ins = CouponTemplate::object($ins->id);
         self::assertNotEmpty($ins);
 
-        $this->assertEquals($ins->name, 'name');
-        $this->assertEquals($ins->desc, '这是描述');
-        $this->assertEquals($ins->min_amount, 100);
-        $this->assertEquals($ins->offer_amount, 200);
-        $this->assertEquals($ins->level, 2);
-        $this->assertEquals($ins->class, 2);
-        $this->assertEquals($ins->kind, 4);
+        self::assertEquals($ins->name, 'name');
+        self::assertEquals($ins->desc, '这是描述');
+        self::assertEquals($ins->min_amount, 100);
+        self::assertEquals($ins->offer_amount, 200);
+        self::assertEquals($ins->level, 2);
+        self::assertEquals($ins->class, 2);
+        self::assertEquals($ins->kind, 4);
 
-        $this->assertTrue($ins->disable());
+        self::assertTrue($ins->disable());
 
         $ins->active = true;
-        $this->assertTrue($ins->put([CouponTemplate::COL_ACTIVE]));
+        self::assertTrue($ins->put([CouponTemplate::COL_ACTIVE]));
 
         $ins = CouponTemplate::object($ins->id);
         self::assertNotEmpty($ins);
-        $this->assertTrue($ins->active);
+        self::assertTrue($ins->active);
 
         return $ins;
     }
@@ -170,7 +170,7 @@ class ModelTest extends TestCase
                 $template->id,
                 10000
             );
-            $this->assertTrue($obj->post());
+            self::assertTrue($obj->post());
 
             $list = CouponPack::list([CouponPack::COL_NAME => 'name'], 10, 0);
         }
@@ -181,32 +181,31 @@ class ModelTest extends TestCase
         $ins = $list['data'][0];
         self::assertNotEmpty($ins);
 
-        $this->assertEquals($ins->name, 'name');
-        $this->assertEquals($ins->desc, '这是描述');
-        $this->assertEquals($ins->activity_id, $activity->id);
-        $this->assertEquals($ins->template_id, $template->id);
-        $this->assertEquals($ins->coupon_size, 10000);
-        $this->assertEquals($ins->level, 1);
+        self::assertEquals($ins->name, 'name');
+        self::assertEquals($ins->desc, '这是描述');
+        self::assertEquals($ins->activity_id, $activity->id);
+        self::assertEquals($ins->template_id, $template->id);
+        self::assertEquals($ins->coupon_size, 10000);
+        self::assertEquals($ins->level, 1);
 
         $ins = CouponPack::object($ins->id);
         self::assertNotEmpty($ins);
 
-        $this->assertEquals($ins->name, 'name');
-        $this->assertEquals($ins->desc, '这是描述');
-        $this->assertEquals($ins->activity_id, $activity->id);
-        $this->assertEquals($ins->template_id, $template->id);
-        $this->assertEquals($ins->coupon_size, 10000);
-        $this->assertEquals($ins->level, 1);
+        self::assertEquals($ins->name, 'name');
+        self::assertEquals($ins->desc, '这是描述');
+        self::assertEquals($ins->activity_id, $activity->id);
+        self::assertEquals($ins->template_id, $template->id);
+        self::assertEquals($ins->coupon_size, 10000);
+        self::assertEquals($ins->level, 1);
 
-        $this->assertTrue($ins->disable());
+        self::assertTrue($ins->disable());
 
         $ins->active = true;
-        $ins->dead_time = $activity->dead_time;
-        $this->assertTrue($ins->put([CouponPack::COL_ACTIVE, CouponPack::COL_DEAD_TIME]));
+        self::assertTrue($ins->put([CouponPack::COL_ACTIVE]));
 
         $ins = CouponPack::object($ins->id);
         self::assertNotEmpty($ins);
-        $this->assertTrue($ins->active);
+        self::assertTrue($ins->active);
 
         return $ins;
     }
@@ -229,7 +228,7 @@ class ModelTest extends TestCase
                 Uuid::uuid(),
                 $pack->id
             );
-            $this->assertTrue($obj->post());
+            self::assertTrue($obj->post());
 
             $list = Coupon::list([Coupon::COL_NAME => 'name'], 10, 0);
         }
@@ -240,89 +239,82 @@ class ModelTest extends TestCase
         $ins = $list['data'][0];
         self::assertNotEmpty($ins);
 
-        $this->assertEquals($ins->name, 'name');
-        $this->assertEquals($ins->desc, '这是描述');
-        $this->assertEquals($ins->activity_id, $pack->activity_id);
-        $this->assertEquals($ins->template_id, $pack->template_id);
-        $this->assertEquals($ins->min_amount, 100);
-        $this->assertEquals($ins->offer_amount, 200);
-        $this->assertEquals($ins->level, 1);
-        $this->assertEquals($ins->class, 2);
-        $this->assertEquals($ins->kind, 4);
+        self::assertEquals($ins->name, 'name');
+        self::assertEquals($ins->desc, '这是描述');
+        self::assertEquals($ins->activity_id, $pack->activity_id);
+        self::assertEquals($ins->template_id, $pack->template_id);
+        self::assertEquals($ins->min_amount, 100);
+        self::assertEquals($ins->offer_amount, 200);
+        self::assertEquals($ins->level, 1);
+        self::assertEquals($ins->class, 2);
+        self::assertEquals($ins->kind, 4);
 
         $ins = Coupon::object($ins->id);
         self::assertNotEmpty($ins);
 
-        $this->assertEquals($ins->name, 'name');
-        $this->assertEquals($ins->desc, '这是描述');
-        $this->assertEquals($ins->activity_id, $pack->activity_id);
-        $this->assertEquals($ins->template_id, $pack->template_id);
-        $this->assertEquals($ins->min_amount, 100);
-        $this->assertEquals($ins->offer_amount, 200);
-        $this->assertEquals($ins->level, 1);
-        $this->assertEquals($ins->class, 2);
-        $this->assertEquals($ins->kind, 4);
+        self::assertEquals($ins->name, 'name');
+        self::assertEquals($ins->desc, '这是描述');
+        self::assertEquals($ins->activity_id, $pack->activity_id);
+        self::assertEquals($ins->template_id, $pack->template_id);
+        self::assertEquals($ins->min_amount, 100);
+        self::assertEquals($ins->offer_amount, 200);
+        self::assertEquals($ins->level, 1);
+        self::assertEquals($ins->class, 2);
+        self::assertEquals($ins->kind, 4);
 
-        $this->assertTrue($ins->disable());
+        self::assertTrue($ins->disable());
 
-        $this->assertFalse($ins->use());
+        self::assertFalse($ins->use());
 
+        $activity = CouponActivity::object($ins->activity_id);
+        self::assertNotEmpty($activity);
         $ins->active = true;
-        $ins->dead_time = $pack->dead_time;
-        $this->assertTrue($ins->put([Coupon::COL_ACTIVE, Coupon::COL_DEAD_TIME]));
+        $ins->dead_time = $activity->dead_time;
+        self::assertTrue($ins->put([Coupon::COL_ACTIVE, Coupon::COL_DEAD_TIME]));
 
-        $this->assertTrue($ins->use());
+        self::assertTrue($ins->use());
 
         $ins = Coupon::object($ins->id);
         self::assertNotEmpty($ins);
-        $this->assertEquals($ins->used_count, 1);
-        $this->assertFalse($ins->active);
+        self::assertEquals($ins->used_count, 1);
+        self::assertFalse($ins->active);
 
         $ins->used_count = 0;
         $ins->active = true;
-        $this->assertTrue($ins->put([Coupon::COL_USED_COUNT, Coupon::COL_ACTIVE]));
+        self::assertTrue($ins->put([Coupon::COL_USED_COUNT, Coupon::COL_ACTIVE]));
 
         $ins = Coupon::object($ins->id);
         self::assertNotEmpty($ins);
-        $this->assertEquals($ins->used_count, 0);
-        $this->assertTrue($ins->active);
+        self::assertEquals($ins->used_count, 0);
+        self::assertTrue($ins->active);
 
         return $ins;
     }
 
     /**
      * @depends testCouponActivity
-     * @depends testCouponPack
      * @depends testCoupon
      * @param CouponActivity $activity
-     * @param CouponPack $pack
      * @param Coupon $coupon
      */
-    public function testManager($activity, $pack, $coupon)
+    public function testManager($activity, $coupon)
     {
         sleep(2);
 
         self::assertNotEmpty($activity);
-        $this->assertTrue($activity->active);
-
-        self::assertNotEmpty($pack);
-        $this->assertTrue($pack->active);
+        self::assertTrue($activity->active);
 
         self::assertNotEmpty($coupon);
-        $this->assertTrue($coupon->active);
+        self::assertTrue($coupon->active);
 
         $r = CouponManager::clean();
-        $this->assertEquals($r['CouponActivity'], 1);
-        $this->assertEquals($r['CouponPack'], 1);
-        $this->assertEquals($r['Coupon'], 1);
+        self::assertEquals($r['CouponActivity'], 1);
+        self::assertEquals($r['Coupon'], 1);
 
         $activity = CouponActivity::object($activity->id);
-        $this->assertFalse($activity->active);
-
-        $pack = CouponPack::object($pack->id);
-        $this->assertFalse($pack->active);
+        self::assertFalse($activity->active);
 
         $coupon = Coupon::object($coupon->id);
-        $this->assertFalse($coupon->active);
+        self::assertFalse($coupon->active);
     }
 }
