@@ -117,15 +117,14 @@ create table coupondb.cp_coupon_pack
 	template_id char(36) not null,
 	coupon_size int default '0' not null,
 	coupon_count int default '0' not null,
-	dead_time datetime default CURRENT_TIMESTAMP not null,
 	dead_day int default '0' not null,
 	constraint cp_coupon_pack_id_uindex
 		unique (id)
 )
 ;
 
-create index cp_coupon_pack_active_dead_time_index
-	on coupondb.cp_coupon_pack (active, dead_time)
+create index cp_coupon_pack_active_index
+	on coupondb.cp_coupon_pack (active)
 ;
 
 create index cp_coupon_pack_activity_id_index
