@@ -349,6 +349,13 @@ Coupon::setConfigPath('./config.yml');
   - @demo `$obj->toJSON()`
   - @return object
 
+- *::obj2JSON($obj)
+  - @description 转为JSON格式对象
+  - @demo `Play::toJSON(Play::get('xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'))`
+  - @param
+    - object $obj 对象
+  - @return object
+
 - *::where($type, $key)
   - @description 使用`*::list($where, $limit, $page, $order)`时，构造`$where`的高级用法。
   - @demo `[Coupon::where(Coupon::WHERE_GTE, Coupon::COL_USED_COUNT) => 10]`，等同于`[Coupon::COL_USED_COUNT>=10]`。
