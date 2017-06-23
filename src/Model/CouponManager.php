@@ -60,29 +60,6 @@ class CouponManager extends Base
      * @return int
      * @throws ErrorException
      */
-    private static function cleanCouponPack()
-    {
-        $query = self::getInstance()->DB()->update(
-            CouponPack::TABLE_NAME,
-            [CouponPack::COL_ACTIVE => false],
-            [
-                CouponPack::where(
-                    CouponPack::WHERE_LTE,
-                    CouponPack::COL_DEAD_TIME
-                ) => Date::get_now_time(),
-            ]
-        );
-        if ($query->errorCode() !== '00000') {
-            throw new ErrorException($query->errorInfo()[2]);
-        }
-
-        return $query->rowCount();
-    }
-
-    /**
-     * @return int
-     * @throws ErrorException
-     */
     private static function cleanCoupon()
     {
         $query = self::getInstance()->DB()->update(
@@ -110,7 +87,6 @@ class CouponManager extends Base
     {
         return [
             'CouponActivity' => self::cleanCouponActivity(),
-            'CouponPack' => self::cleanCouponPack(),
             'Coupon' => self::cleanCoupon(),
         ];
     }

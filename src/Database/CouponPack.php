@@ -15,7 +15,6 @@ class CouponPack extends BaseTemplate2
     const COL_TEMPLATE_ID = 'template_id';
     const COL_COUPON_SIZE = 'coupon_size';
     const COL_COUPON_COUNT = 'coupon_count';
-    const COL_DEAD_TIME = 'dead_time';
     const COL_DEAD_DAY = 'dead_day';
 
     /**
@@ -47,11 +46,6 @@ class CouponPack extends BaseTemplate2
      * @var int
      */
     public $coupon_count = 0;
-
-    /**
-     * @var string
-     */
-    public $dead_time;
 
     /**
      * @var int
@@ -88,7 +82,6 @@ class CouponPack extends BaseTemplate2
                 self::COL_TEMPLATE_ID => $this->template_id,
                 self::COL_COUPON_SIZE => $this->coupon_size,
                 self::COL_COUPON_COUNT => $this->coupon_count,
-                self::COL_DEAD_TIME => $this->dead_time,
                 self::COL_DEAD_DAY => $this->dead_day,
             ]
         );
@@ -106,7 +99,6 @@ class CouponPack extends BaseTemplate2
         $this->template_id = $data[self::COL_TEMPLATE_ID];
         $this->coupon_size = intval($data[self::COL_COUPON_SIZE]);
         $this->coupon_count = intval($data[self::COL_COUPON_COUNT]);
-        $this->dead_time = $data[self::COL_DEAD_TIME];
         $this->dead_day = intval($data[self::COL_DEAD_DAY]);
 
         return $this;
@@ -140,9 +132,6 @@ class CouponPack extends BaseTemplate2
         }
         if ($this->coupon_count < 0) {
             throw new ErrorException('"coupon_count" should be positive or zero!');
-        }
-        if (empty($this->dead_time)) {
-            throw new ErrorException('"dead_time" should be a date!');
         }
         if ($this->dead_day < 0) {
             $this->dead_day = 0;

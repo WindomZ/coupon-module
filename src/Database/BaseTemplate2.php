@@ -11,6 +11,7 @@ use CouponModule\Exception\ErrorException;
 abstract class BaseTemplate2 extends BaseTemplate1
 {
     const COL_DESC = 'desc';
+    const COL_LEVEL = 'level';
 
     /**
      * @var string
@@ -26,6 +27,7 @@ abstract class BaseTemplate2 extends BaseTemplate1
             parent::toArray(),
             [
                 self::COL_DESC => $this->desc,
+                self::COL_LEVEL => $this->level,
             ]
         );
     }
@@ -39,6 +41,7 @@ abstract class BaseTemplate2 extends BaseTemplate1
         parent::toInstance($data);
 
         $this->desc = $data[self::COL_DESC];
+        $this->level = intval($data[self::COL_LEVEL]);
 
         return $this;
     }
