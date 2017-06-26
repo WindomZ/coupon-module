@@ -27,11 +27,11 @@ class ModelTest extends TestCase
         $coupon = _Coupon::getInstance();
         self::assertNotEmpty($coupon);
 
-        $list = CouponActivity::list([CouponActivity::COL_NAME => 'name'], 10, 0);
+        $list = CouponActivity::list([CouponActivity::COL_NAME => '这是名称name'], 10, 0);
         if (!$list || !$list['size']) {
             $obj = CouponActivity::create(
-                'name',
-                '这是描述',
+                '这是名称name',
+                '这是描述desc',
                 1
             );
             $obj->level = 1;
@@ -46,7 +46,7 @@ class ModelTest extends TestCase
             $obj->dead_time = Date::get_next_time(2);
             self::assertTrue($obj->post());
 
-            $list = CouponActivity::list([CouponActivity::COL_NAME => 'name'], 10, 0);
+            $list = CouponActivity::list([CouponActivity::COL_NAME => '这是名称name'], 10, 0);
         }
         self::assertNotEmpty($list);
         self::assertEquals(sizeof($list), 4);
@@ -55,8 +55,8 @@ class ModelTest extends TestCase
         $ins = $list['data'][0];
         self::assertNotEmpty($ins);
 
-        self::assertEquals($ins->name, 'name');
-        self::assertEquals($ins->desc, '这是描述');
+        self::assertEquals($ins->name, '这是名称name');
+        self::assertEquals($ins->desc, '这是描述desc');
         self::assertEquals($ins->coupon_limit, 1);
         self::assertEquals($ins->level, 1);
         self::assertEquals($ins->class, 1);
@@ -65,8 +65,8 @@ class ModelTest extends TestCase
         $ins = CouponActivity::object($ins->id);
         self::assertNotEmpty($ins);
 
-        self::assertEquals($ins->name, 'name');
-        self::assertEquals($ins->desc, '这是描述');
+        self::assertEquals($ins->name, '这是名称name');
+        self::assertEquals($ins->desc, '这是描述desc');
         self::assertEquals($ins->coupon_limit, 1);
         self::assertEquals($ins->level, 1);
         self::assertEquals($ins->class, 1);
@@ -93,11 +93,11 @@ class ModelTest extends TestCase
         $coupon = _Coupon::getInstance();
         self::assertNotEmpty($coupon);
 
-        $list = CouponTemplate::list([CouponTemplate::COL_NAME => 'name'], 10, 0);
+        $list = CouponTemplate::list([CouponTemplate::COL_NAME => '这是名称name'], 10, 0);
         if (!$list || !$list['size']) {
             $obj = CouponTemplate::create(
-                'name',
-                '这是描述',
+                '这是名称name',
+                '这是描述desc',
                 100,
                 200
             );
@@ -106,7 +106,7 @@ class ModelTest extends TestCase
             $obj->kind = 4;
             self::assertTrue($obj->post());
 
-            $list = CouponTemplate::list([CouponTemplate::COL_NAME => 'name'], 10, 0);
+            $list = CouponTemplate::list([CouponTemplate::COL_NAME => '这是名称name'], 10, 0);
         }
         self::assertNotEmpty($list);
         self::assertEquals(sizeof($list), 4);
@@ -115,8 +115,8 @@ class ModelTest extends TestCase
         $ins = $list['data'][0];
         self::assertNotEmpty($ins);
 
-        self::assertEquals($ins->name, 'name');
-        self::assertEquals($ins->desc, '这是描述');
+        self::assertEquals($ins->name, '这是名称name');
+        self::assertEquals($ins->desc, '这是描述desc');
         self::assertEquals($ins->min_amount, 100);
         self::assertEquals($ins->offer_amount, 200);
         self::assertEquals($ins->level, 2);
@@ -126,8 +126,8 @@ class ModelTest extends TestCase
         $ins = CouponTemplate::object($ins->id);
         self::assertNotEmpty($ins);
 
-        self::assertEquals($ins->name, 'name');
-        self::assertEquals($ins->desc, '这是描述');
+        self::assertEquals($ins->name, '这是名称name');
+        self::assertEquals($ins->desc, '这是描述desc');
         self::assertEquals($ins->min_amount, 100);
         self::assertEquals($ins->offer_amount, 200);
         self::assertEquals($ins->level, 2);
@@ -161,18 +161,18 @@ class ModelTest extends TestCase
         $coupon = _Coupon::getInstance();
         self::assertNotEmpty($coupon);
 
-        $list = CouponPack::list([CouponPack::COL_NAME => 'name'], 10, 0);
+        $list = CouponPack::list([CouponPack::COL_NAME => '这是名称name'], 10, 0);
         if (!$list || !$list['size']) {
             $obj = CouponPack::create(
-                'name',
-                '这是描述',
+                '这是名称name',
+                '这是描述desc',
                 $activity->id,
                 $template->id,
                 10000
             );
             self::assertTrue($obj->post());
 
-            $list = CouponPack::list([CouponPack::COL_NAME => 'name'], 10, 0);
+            $list = CouponPack::list([CouponPack::COL_NAME => '这是名称name'], 10, 0);
         }
         self::assertNotEmpty($list);
         self::assertEquals(sizeof($list), 4);
@@ -181,8 +181,8 @@ class ModelTest extends TestCase
         $ins = $list['data'][0];
         self::assertNotEmpty($ins);
 
-        self::assertEquals($ins->name, 'name');
-        self::assertEquals($ins->desc, '这是描述');
+        self::assertEquals($ins->name, '这是名称name');
+        self::assertEquals($ins->desc, '这是描述desc');
         self::assertEquals($ins->activity_id, $activity->id);
         self::assertEquals($ins->template_id, $template->id);
         self::assertEquals($ins->coupon_size, 10000);
@@ -191,8 +191,8 @@ class ModelTest extends TestCase
         $ins = CouponPack::object($ins->id);
         self::assertNotEmpty($ins);
 
-        self::assertEquals($ins->name, 'name');
-        self::assertEquals($ins->desc, '这是描述');
+        self::assertEquals($ins->name, '这是名称name');
+        self::assertEquals($ins->desc, '这是描述desc');
         self::assertEquals($ins->activity_id, $activity->id);
         self::assertEquals($ins->template_id, $template->id);
         self::assertEquals($ins->coupon_size, 10000);
@@ -222,7 +222,7 @@ class ModelTest extends TestCase
         $coupon = _Coupon::getInstance();
         self::assertNotEmpty($coupon);
 
-        $list = Coupon::list([Coupon::COL_NAME => 'name'], 10, 0);
+        $list = Coupon::list([Coupon::COL_NAME => '这是名称name'], 10, 0);
         if (!$list || !$list['size']) {
             $obj = Coupon::create(
                 Uuid::uuid(),
@@ -230,7 +230,7 @@ class ModelTest extends TestCase
             );
             self::assertTrue($obj->post());
 
-            $list = Coupon::list([Coupon::COL_NAME => 'name'], 10, 0);
+            $list = Coupon::list([Coupon::COL_NAME => '这是名称name'], 10, 0);
         }
         self::assertNotEmpty($list);
         self::assertEquals(sizeof($list), 4);
@@ -239,8 +239,8 @@ class ModelTest extends TestCase
         $ins = $list['data'][0];
         self::assertNotEmpty($ins);
 
-        self::assertEquals($ins->name, 'name');
-        self::assertEquals($ins->desc, '这是描述');
+        self::assertEquals($ins->name, '这是名称name');
+        self::assertEquals($ins->desc, '这是描述desc');
         self::assertEquals($ins->activity_id, $pack->activity_id);
         self::assertEquals($ins->template_id, $pack->template_id);
         self::assertEquals($ins->min_amount, 100);
@@ -252,8 +252,8 @@ class ModelTest extends TestCase
         $ins = Coupon::object($ins->id);
         self::assertNotEmpty($ins);
 
-        self::assertEquals($ins->name, 'name');
-        self::assertEquals($ins->desc, '这是描述');
+        self::assertEquals($ins->name, '这是名称name');
+        self::assertEquals($ins->desc, '这是描述desc');
         self::assertEquals($ins->activity_id, $pack->activity_id);
         self::assertEquals($ins->template_id, $pack->template_id);
         self::assertEquals($ins->min_amount, 100);
