@@ -1,9 +1,9 @@
 {
     "name": "windomz/coupon-module",
-    "description": "",
+    "description": "A coupon module component - modularity and easy to deploy.",
     "keywords": ["coupon", "module"],
     "type": "library",
-    "license": "Apache-2.0",
+    "license": "MIT",
     "authors": [
         {
             "name": "WindomZ",

@@ -9,11 +9,20 @@ namespace CouponModule\Database;
 abstract class BaseCommon extends BaseDb
 {
     /**
+     * @param mixed $obj
+     * @return mixed
+     */
+    public static function obj2JSON($obj)
+    {
+        return json_decode(json_encode($obj), true);
+    }
+
+    /**
      * @return mixed
      */
     public function toJSON()
     {
-        return json_decode(json_encode($this), true);
+        return self::obj2JSON($this);
     }
 
     const WHERE_EQ = 0; // = *

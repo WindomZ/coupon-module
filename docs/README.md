@@ -102,7 +102,6 @@ Coupon::setConfigPath('./config.yml');
 |string|template_id|Y|N|优惠卷模板UUID|
 |int|coupon_size|Y|Y|优惠卷派放总数|
 |int|coupon_count|N|N|优惠卷派放数量|
-|string|dead_time|Y|Y|截止时间|
 |int|dead_day|N|Y|截止天数，若大于0则影响优惠券的截止日期|
 
 #### 优惠卷批次(`CouponBatch`)
@@ -177,7 +176,6 @@ Coupon::setConfigPath('./config.yml');
 
 - CouponActivity->disable()
   - @description 取消优惠卷活动(`CouponActivity`)
-  - @param
   - @return bool
 
 #### 优惠卷模板(`CouponTemplate`)
@@ -218,7 +216,6 @@ Coupon::setConfigPath('./config.yml');
 
 - CouponTemplate->disable()
   - @description 取消优惠卷模板(`CouponTemplate`)
-  - @param
   - @return bool
 
 #### 优惠卷包(`CouponPack`)
@@ -260,7 +257,6 @@ Coupon::setConfigPath('./config.yml');
 
 - CouponPack->disable()
   - @description 取消优惠卷包(`CouponPack`)
-  - @param
   - @return bool
 
 #### 优惠卷批次(`CouponBatch`)
@@ -334,12 +330,10 @@ Coupon::setConfigPath('./config.yml');
 
 - Coupon->disable()
   - @description 取消优惠卷(`Coupon`)
-  - @param
   - @return bool
 
 - Coupon->use()
   - @description 使用优惠卷(`Coupon`)
-  - @param
   - @return bool
 
 #### 优惠卷管理(`CouponManager`)
@@ -353,6 +347,13 @@ Coupon::setConfigPath('./config.yml');
 - *->toJSON()
   - @description 转为JSON格式对象
   - @demo `$obj->toJSON()`
+  - @return object
+
+- *::obj2JSON($obj)
+  - @description 转为JSON格式对象
+  - @demo `Play::toJSON(Play::get('xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'))`
+  - @param
+    - object $obj 对象
   - @return object
 
 - *::where($type, $key)

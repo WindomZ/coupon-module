@@ -17,7 +17,7 @@
 - [x] CouponBatch
 - [x] Coupon = CouponPack + CouponBatch
 
-## Installation
+## Install
 
 Open the terminal in the project directory:
 ```bash
@@ -32,7 +32,7 @@ database_type: mysql
 database_name: coupondb
 database_username: root
 database_password: root
-database_logging: true
+database_logging: true # open debug log
 ```
 
 If only for quick testing, 

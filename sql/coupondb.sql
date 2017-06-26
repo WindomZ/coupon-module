@@ -4,7 +4,8 @@ CREATE SCHEMA coupondb CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 create table coupondb.cp_coupon
 (
-	id char(36) not null,
+	id char(36) not null
+		primary key,
 	post_time datetime default CURRENT_TIMESTAMP not null,
 	put_time datetime default CURRENT_TIMESTAMP not null,
 	name varchar(32) default '' not null,
@@ -59,7 +60,8 @@ create index cp_coupon_pack_id_index
 
 create table coupondb.cp_coupon_activity
 (
-	id char(36) not null,
+	id char(36) not null
+		primary key,
 	post_time datetime default CURRENT_TIMESTAMP not null,
 	put_time datetime default CURRENT_TIMESTAMP not null,
 	name varchar(32) default '' not null,
@@ -86,7 +88,8 @@ create index cp_coupon_activity_class_kind_index
 
 create table coupondb.cp_coupon_batch
 (
-	id char(36) not null,
+	id char(36) not null
+		primary key,
 	post_time datetime default CURRENT_TIMESTAMP not null,
 	put_time datetime default CURRENT_TIMESTAMP not null,
 	owner_id char(36) not null,
@@ -106,7 +109,8 @@ create index cp_coupon_batch_owner_id_index
 
 create table coupondb.cp_coupon_pack
 (
-	id char(36) not null,
+	id char(36) not null
+		primary key,
 	post_time datetime default CURRENT_TIMESTAMP not null,
 	put_time datetime default CURRENT_TIMESTAMP not null,
 	name varchar(32) default '' not null,
@@ -117,15 +121,14 @@ create table coupondb.cp_coupon_pack
 	template_id char(36) not null,
 	coupon_size int default '0' not null,
 	coupon_count int default '0' not null,
-	dead_time datetime default CURRENT_TIMESTAMP not null,
 	dead_day int default '0' not null,
 	constraint cp_coupon_pack_id_uindex
 		unique (id)
 )
 ;
 
-create index cp_coupon_pack_active_dead_time_index
-	on coupondb.cp_coupon_pack (active, dead_time)
+create index cp_coupon_pack_active_index
+	on coupondb.cp_coupon_pack (active)
 ;
 
 create index cp_coupon_pack_activity_id_index
@@ -138,7 +141,8 @@ create index cp_coupon_pack_template_id_index
 
 create table coupondb.cp_coupon_template
 (
-	id char(36) not null,
+	id char(36) not null
+		primary key,
 	post_time datetime default CURRENT_TIMESTAMP not null,
 	put_time datetime default CURRENT_TIMESTAMP not null,
 	name varchar(32) default '' not null,
