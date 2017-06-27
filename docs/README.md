@@ -83,7 +83,7 @@ Coupon::setConfigPath('./config.yml');
 |string|desc|N|Y|描述|
 |int|class|Y|N|类别(第一级分类，单选，可选)，采用分类方式：0, 1, 2, 3, 4, 5, 6, 7...|
 |int|kind|Y|N|类型(第二级分类，多选，可选)，采用分类方式：1, 2, 4, 8, 16, 32, 64...|
-|string|product_id|N|N|关联商品UUID(第二级分类，单选，可选)|
+|string|product_id|N|N|关联外部UUID(可选)|
 |float|min_amount|Y|N|满减条件金额|
 |float|offer_amount|Y|N|满减金额|
 
