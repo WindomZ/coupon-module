@@ -6,6 +6,7 @@
 [![Build Status](https://img.shields.io/travis/WindomZ/coupon-module/master.svg?style=flat-square)](https://travis-ci.org/WindomZ/coupon-module)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.0-8892BF.svg?style=flat-square)](https://php.net/)
 [![Minimum MYSQL Version](https://img.shields.io/badge/mysql-%3E%3D%205.6-4479a1.svg?style=flat-square)](https://www.mysql.com/)
+[![Platform](https://img.shields.io/badge/platform-Linux%2FmacOS%2FWindows-ff69b4.svg?style=flat-square)](#readme)
 
 [中文文档](https://github.com/WindomZ/coupon-module/blob/master/README_Ch-zh.md#readme)
 
@@ -53,4 +54,4 @@ Refer to the [Document](https://windomz.github.io/coupon-module)(_Currently only
 
 ## License
 
-The [MIT License](https://github.com/WindomZ/coupon-module/blob/master/LICENSE)
+[MIT](https://github.com/WindomZ/coupon-module/blob/master/LICENSE)

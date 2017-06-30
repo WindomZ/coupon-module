@@ -27,7 +27,7 @@ abstract class BaseList extends BaseCommon
     protected function addList($obj)
     {
         if (!empty($obj)) {
-            array_push($this->select_list, $obj);
+            $this->select_list[] = $obj;
         }
     }
 
@@ -59,7 +59,7 @@ abstract class BaseList extends BaseCommon
      */
     private function _select(array $where = null, int $limit = 0, int $page = 0, array $order = null)
     {
-        $this->select_size = $this->DB()->count($this->getTableName(), $where);
+        $this->select_size = self::DB()->count($this->getTableName(), $where);
         if (!$this->select_size) {
             return true;
         }
@@ -82,9 +82,9 @@ abstract class BaseList extends BaseCommon
             $where['ORDER'] = $order;
         }
 
-        $data = $this->DB()->select($this->getTableName(), '*', $where);
+        $data = self::DB()->select($this->getTableName(), '*', $where);
 
-        if (!$data || gettype($data) !== 'array') {
+        if (!$data || !is_array($data)) {
             return false;
         }
 

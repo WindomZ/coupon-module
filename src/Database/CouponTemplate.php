@@ -8,7 +8,7 @@ use CouponModule\Exception\ErrorException;
  * Class CouponTemplate
  * @package CouponModule\Database
  */
-class CouponTemplate extends BaseTemplate2
+class CouponTemplate extends BaseTemplate3
 {
     const COL_CLASS = 'class';
     const COL_KIND = 'kind';

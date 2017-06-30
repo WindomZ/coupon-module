@@ -19,6 +19,11 @@ abstract class BaseTemplate2 extends BaseTemplate1
     public $desc = '';
 
     /**
+     * @var int
+     */
+    public $level = 0;
+
+    /**
      * @return array
      */
     protected function toArray(): array

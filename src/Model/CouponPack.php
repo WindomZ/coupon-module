@@ -80,6 +80,8 @@ class CouponPack extends DbCouponPack
         $obj = new CouponPack();
         $obj->name = $name;
         $obj->desc = $desc;
+        $obj->owner_id = $activity->owner_id;
+        $obj->shared = $activity->shared;
         $obj->activity = $activity;
         $obj->activity_id = $activity->id;
         $obj->template = $template;
