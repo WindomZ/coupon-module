@@ -9,7 +9,7 @@ use CouponModule\Util\Uuid;
  * Class CouponPack
  * @package CouponModule\Database
  */
-class CouponPack extends BaseTemplate2
+class CouponPack extends BaseTemplate3
 {
     const COL_ACTIVITY_ID = 'activity_id';
     const COL_TEMPLATE_ID = 'template_id';
