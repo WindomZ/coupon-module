@@ -38,7 +38,7 @@ abstract class BaseDb extends Base
      */
     protected function update(array $data, array $where = null)
     {
-        return $this->DB()->update($this->getTableName(), $data, $where);
+        return self::DB()->update($this->getTableName(), $data, $where);
     }
 
     /**
@@ -59,7 +59,7 @@ abstract class BaseDb extends Base
     {
         $this->beforePost();
 
-        $query = $this->DB()->insert($this->getTableName(), $this->toArray());
+        $query = self::DB()->insert($this->getTableName(), $this->toArray());
         if ($query->errorCode() !== '00000') {
             throw new ErrorException($query->errorInfo()[2]);
         }
@@ -102,7 +102,7 @@ abstract class BaseDb extends Base
      */
     protected function get(array $where = null): bool
     {
-        $data = $this->DB()->get($this->getTableName(), '*', $where);
+        $data = self::DB()->get($this->getTableName(), '*', $where);
         if (!$data) {
             return false;
         }
@@ -116,7 +116,7 @@ abstract class BaseDb extends Base
      */
     protected function count(array $where = null): int
     {
-        $count = $this->DB()->count($this->getTableName(), $where);
+        $count = self::DB()->count($this->getTableName(), $where);
         if (!$count) {
             return -1;
         }
@@ -136,10 +136,10 @@ abstract class BaseDb extends Base
         }
 
         $query = 'SELECT COUNT(*) FROM '
-            .$this->DB()->tableQuote($this->getTableName())
+            .self::DB()->tableQuote($this->getTableName())
             .' WHERE '
             .$where;
-        $date = $this->DB()->query($query, $map)->fetchAll();
+        $date = self::DB()->query($query, $map)->fetchAll();
         if (empty($date) || empty($date[0])) {
             return -1;
         }

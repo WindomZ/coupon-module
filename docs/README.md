@@ -62,8 +62,10 @@ Coupon::setConfigPath('./config.yml');
 |string|put_time|N|N|修改时间|
 |string|name|Y|Y|名称|
 |bool|active|N|Y|是否生效|
-|string|level|N|Y|级别|
 |string|desc|N|Y|描述|
+|string|level|N|Y|级别|
+|string|owner_id|N|Y|拥有者UUID|
+|bool|shared|N|Y|开启持有共享|
 |string|url|N|Y|链接地址|
 |int|class|Y|N|类别(第一级分类，单选，可选)，采用分类方式：0, 1, 2, 3, 4, 5, 6, 7...|
 |int|kind|Y|N|类型(第二级分类，多选，可选)，采用分类方式：1, 2, 4, 8, 16, 32, 64...|
@@ -79,11 +81,13 @@ Coupon::setConfigPath('./config.yml');
 |string|put_time|N|N|修改时间|
 |string|name|Y|Y|名称|
 |bool|active|N|Y|是否生效|
-|string|level|N|Y|级别|
 |string|desc|N|Y|描述|
+|string|level|N|Y|级别|
+|string|owner_id|N|Y|拥有者UUID|
+|bool|shared|N|Y|开启持有共享|
 |int|class|Y|N|类别(第一级分类，单选，可选)，采用分类方式：0, 1, 2, 3, 4, 5, 6, 7...|
 |int|kind|Y|N|类型(第二级分类，多选，可选)，采用分类方式：1, 2, 4, 8, 16, 32, 64...|
-|string|product_id|N|N|关联商品UUID(第二级分类，单选，可选)|
+|string|product_id|N|N|关联外部UUID(可选)|
 |float|min_amount|Y|N|满减条件金额|
 |float|offer_amount|Y|N|满减金额|
 
@@ -96,8 +100,10 @@ Coupon::setConfigPath('./config.yml');
 |string|put_time|N|N|修改时间|
 |string|name|Y|Y|名称|
 |bool|active|N|Y|是否生效|
-|string|level|N|Y|级别|
 |string|desc|N|Y|描述|
+|string|level|N|Y|级别|
+|string|owner_id|N|Y|拥有者UUID|
+|bool|shared|N|Y|开启持有共享|
 |string|activity_id|Y|N|活动UUID|
 |string|template_id|Y|N|优惠卷模板UUID|
 |int|coupon_size|Y|Y|优惠卷派放总数|
@@ -123,9 +129,10 @@ Coupon::setConfigPath('./config.yml');
 |string|put_time|N|N|修改时间|
 |string|name|Y|Y|名称|
 |bool|active|N|Y|是否生效|
-|string|level|N|Y|级别|
 |string|desc|N|Y|描述|
-|string|owner_id|Y|N|用户UUID|
+|string|level|N|Y|级别|
+|string|owner_id|N|Y|拥有者UUID|
+|bool|shared|N|Y|开启持有共享|
 |string|activity_id|Y|N|活动UUID|
 |string|template_id|Y|N|优惠卷模板UUID|
 |int|used_count|N|N|优惠卷使用次数|
@@ -178,6 +185,9 @@ Coupon::setConfigPath('./config.yml');
   - @description 取消优惠卷活动(`CouponActivity`)
   - @return bool
 
+- CouponActivity::ID_OWNER_ALL
+  - @description 默认的拥有者UUID - 开启持有共享'shared'
+
 #### 优惠卷模板(`CouponTemplate`)
 
 - CouponTemplate::object($id)
@@ -217,6 +227,9 @@ Coupon::setConfigPath('./config.yml');
 - CouponTemplate->disable()
   - @description 取消优惠卷模板(`CouponTemplate`)
   - @return bool
+
+- CouponTemplate::ID_OWNER_ALL
+  - @description 默认的拥有者UUID - 开启持有共享'shared'
 
 #### 优惠卷包(`CouponPack`)
 
@@ -258,6 +271,9 @@ Coupon::setConfigPath('./config.yml');
 - CouponPack->disable()
   - @description 取消优惠卷包(`CouponPack`)
   - @return bool
+
+- CouponPack::ID_OWNER_ALL
+  - @description 默认的拥有者UUID - 开启持有共享'shared'
 
 #### 优惠卷批次(`CouponBatch`)
 

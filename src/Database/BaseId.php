@@ -65,6 +65,7 @@ abstract class BaseId extends BaseList
 
     /**
      * @return bool
+     * @throws ErrorException
      */
     public function post(): bool
     {
@@ -113,10 +114,10 @@ abstract class BaseId extends BaseList
      */
     public function put($columns, array $where = []): bool
     {
-        if ($columns !== '*') {
+        if (is_array($columns)) {
             $columns = array_diff($columns, [self::COL_ID]);
             $columns = array_diff($columns, [self::COL_POST_TIME]);
-            array_push($columns, self::COL_PUT_TIME);
+            $columns[] = self::COL_PUT_TIME;
         }
 
         if (!array_key_exists(self::COL_ID, $where)) {

@@ -20,7 +20,7 @@ abstract class Base
     /**
      * @return Database
      */
-    protected function DB()
+    protected static function DB()
     {
         return Coupon::getInstance()->getDatabase();
     }
