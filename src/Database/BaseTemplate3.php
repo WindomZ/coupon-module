@@ -5,23 +5,25 @@ namespace CouponModule\Database;
 use CouponModule\Exception\ErrorException;
 
 /**
- * Class BaseTemplate1
+ * Class BaseTemplate3
  * @package CouponModule\Database
  */
-abstract class BaseTemplate1 extends BaseId
+abstract class BaseTemplate3 extends BaseTemplate2
 {
-    const COL_NAME = 'name';
-    const COL_ACTIVE = 'active';
+    const ID_OWNER_ALL = '00000000-0000-0000-0000-000000000000';
+
+    const COL_OWNER_ID = 'owner_id';
+    const COL_SHARED = 'shared';
 
     /**
      * @var string
      */
-    public $name;
+    public $owner_id = self::ID_OWNER_ALL;
 
     /**
      * @var bool
      */
-    public $active = true;
+    public $shared = true;
 
     /**
      * @return array
@@ -31,8 +33,8 @@ abstract class BaseTemplate1 extends BaseId
         return array_merge(
             parent::toArray(),
             [
-                self::COL_NAME => $this->name,
-                self::COL_ACTIVE => $this->active,
+                self::COL_OWNER_ID => $this->owner_id,
+                self::COL_SHARED => $this->shared,
             ]
         );
     }
@@ -45,8 +47,8 @@ abstract class BaseTemplate1 extends BaseId
     {
         parent::toInstance($data);
 
-        $this->name = $data[self::COL_NAME];
-        $this->active = boolval($data[self::COL_ACTIVE]);
+        $this->owner_id = $data[self::COL_OWNER_ID];
+        $this->shared = boolval($data[self::COL_SHARED]);
 
         return $this;
     }
@@ -56,9 +58,7 @@ abstract class BaseTemplate1 extends BaseId
      */
     protected function beforePost()
     {
-        if (empty($this->name)) {
-            throw new ErrorException('"name" should not be empty!"');
-        }
+        $this->shared = $this->shared || $this->owner_id === self::ID_OWNER_ALL;
 
         parent::beforePost();
     }
@@ -69,5 +69,15 @@ abstract class BaseTemplate1 extends BaseId
     protected function beforePut()
     {
         parent::beforePut();
+    }
+
+    /**
+     * @param string $owner_id
+     * @param bool $shared
+     */
+    public function setOwner(string $owner_id, bool $shared = false)
+    {
+        $this->owner_id = $owner_id;
+        $this->shared = $shared || $owner_id === self::ID_OWNER_ALL;
     }
 }
