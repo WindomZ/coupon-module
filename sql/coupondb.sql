@@ -10,9 +10,10 @@ create table coupondb.cp_coupon
 	put_time datetime default CURRENT_TIMESTAMP not null,
 	name varchar(32) default '' not null,
 	active tinyint(1) default '1' not null,
-	level int default '0' not null,
 	`desc` varchar(256) default '' not null,
-	owner_id char(36) not null,
+	level int default '0' not null,
+	owner_id char(36) default '00000000-0000-0000-0000-000000000000' not null,
+	shared tinyint(1) default '0' not null,
 	activity_id char(36) not null,
 	template_id char(36) not null,
 	pack_id char(36) not null,
@@ -42,10 +43,6 @@ create index cp_coupon_class_kind_index
 	on coupondb.cp_coupon (class, kind)
 ;
 
-create index cp_coupon_owner_id_index
-	on coupondb.cp_coupon (owner_id)
-;
-
 create index cp_coupon_template_id_index
 	on coupondb.cp_coupon (template_id)
 ;
@@ -58,6 +55,14 @@ create index cp_coupon_pack_id_index
 	on coupondb.cp_coupon (pack_id)
 ;
 
+create index cp_coupon_owner_id_index
+	on coupondb.cp_coupon (owner_id)
+;
+
+create index cp_coupon_shared_index
+	on coupondb.cp_coupon (shared)
+;
+
 create table coupondb.cp_coupon_activity
 (
 	id char(36) not null
@@ -66,8 +71,10 @@ create table coupondb.cp_coupon_activity
 	put_time datetime default CURRENT_TIMESTAMP not null,
 	name varchar(32) default '' not null,
 	active tinyint(1) default '1' not null,
-	level int default '0' not null,
 	`desc` varchar(256) default '' not null,
+	level int default '0' not null,
+	owner_id char(36) default '00000000-0000-0000-0000-000000000000' not null,
+	shared tinyint(1) default '0' not null,
 	url varchar(256) default '' not null,
 	class int default '0' not null,
 	kind int default '0' not null,
@@ -84,6 +91,14 @@ create index cp_coupon_activity_active_dead_time_index
 
 create index cp_coupon_activity_class_kind_index
 	on coupondb.cp_coupon_activity (class, kind)
+;
+
+create index cp_coupon_activity_owner_id_index
+	on coupondb.cp_coupon_activity (owner_id)
+;
+
+create index cp_coupon_activity_shared_index
+	on coupondb.cp_coupon_activity (shared)
 ;
 
 create table coupondb.cp_coupon_batch
@@ -115,8 +130,10 @@ create table coupondb.cp_coupon_pack
 	put_time datetime default CURRENT_TIMESTAMP not null,
 	name varchar(32) default '' not null,
 	active tinyint(1) default '1' not null,
-	level int default '0' not null,
 	`desc` varchar(256) default '' not null,
+	level int default '0' not null,
+	owner_id char(36) default '00000000-0000-0000-0000-000000000000' not null,
+	shared tinyint(1) default '0' not null,
 	activity_id char(36) not null,
 	template_id char(36) not null,
 	coupon_size int default '0' not null,
@@ -139,6 +156,14 @@ create index cp_coupon_pack_template_id_index
 	on coupondb.cp_coupon_pack (template_id)
 ;
 
+create index cp_coupon_pack_owner_id_index
+	on coupondb.cp_coupon_pack (owner_id)
+;
+
+create index cp_coupon_pack_shared_index
+	on coupondb.cp_coupon_pack (shared)
+;
+
 create table coupondb.cp_coupon_template
 (
 	id char(36) not null
@@ -147,8 +172,10 @@ create table coupondb.cp_coupon_template
 	put_time datetime default CURRENT_TIMESTAMP not null,
 	name varchar(32) default '' not null,
 	active tinyint(1) default '1' not null,
-	level int default '0' not null,
 	`desc` varchar(256) default '' not null,
+	level int default '0' not null,
+	owner_id char(36) default '00000000-0000-0000-0000-000000000000' not null,
+	shared tinyint(1) default '0' not null,
 	class int default '0' not null,
 	kind int default '0' not null,
 	product_id varchar(36) default '' not null,
@@ -171,3 +198,10 @@ create index cp_coupon_template_product_id_index
 	on coupondb.cp_coupon_template (product_id)
 ;
 
+create index cp_coupon_template_owner_id_index
+	on coupondb.cp_coupon_template (owner_id)
+;
+
+create index cp_coupon_template_shared_index
+	on coupondb.cp_coupon_template (shared)
+;
