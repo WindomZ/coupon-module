@@ -117,10 +117,8 @@ class Coupon extends DbCoupon
 
         $obj->dead_time = $activity->dead_time;
         if ($pack->dead_day > 0) {
-            $obj->dead_time = Date::get_next_zero_time(
-                86400 * ($pack->dead_day
-                + (\idate('H', time()) >= 22) ? 1 : 0) - 1
-            );
+            $correction = intval((\idate('H', time()) >= 22) ? 1 : 0);
+            $obj->dead_time = Date::get_next_zero_time(86400 * ($pack->dead_day + $correction) - 1);
         }
 
         return $obj;
