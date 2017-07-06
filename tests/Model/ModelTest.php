@@ -170,6 +170,7 @@ class ModelTest extends TestCase
                 $template->id,
                 10000
             );
+            $obj->dead_day = 7;
             self::assertTrue($obj->post());
 
             $list = CouponPack::list([CouponPack::COL_NAME => '这是名称name'], 10, 0);
@@ -261,6 +262,7 @@ class ModelTest extends TestCase
         self::assertEquals($ins->level, 1);
         self::assertEquals($ins->class, 2);
         self::assertEquals($ins->kind, 4);
+        self::assertTrue(Date::after($ins->dead_time));
 
         self::assertTrue($ins->disable());
 
